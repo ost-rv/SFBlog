@@ -1,0 +1,29 @@
+﻿@model IEnumerable<SFBlog.Models.TagViewModel>
+
+@{
+    ViewData["Title"] = "Все теги";
+}
+
+<h4>Все теги</h4>
+
+<p>
+    <a asp-controller="Tag" asp-action="AddTag">Добавить тег</a>
+</p>
+
+
+@foreach (var tag in Model) {
+    <div class="form-group">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a asp-controller="Tag" asp-action="EditTag" asp-route-id="@tag.Id">@tag.Designation</a>
+                </h5>
+                <p class="card-text text-right">Статей по тэгу: @tag.CountPost</p>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+    

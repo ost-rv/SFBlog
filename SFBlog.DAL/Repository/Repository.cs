@@ -1,47 +1,77 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace SFBlog.DAL.Repository
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected DbContext _db;
 
-        public DbSet<T> Set { get; private set; }
+        public DbSet<TEntity> Set { get; private set; }
 
         public Repository(SFBlogDbContext db)
         {
             _db = db;
-            var set = _db.Set<T>();
+            var set = _db.Set<TEntity>();
             set.Load();
             Set = set;
         }
 
-        public async Task<int> Create(T item)
+        public async Task<int> Create(TEntity item)
         {
             Set.Add(item);
             return await _db.SaveChangesAsync();
         }
 
-        public async Task<int> Delete(T item)
+        public async Task<int> Delete(TEntity item)
         {
             Set.Remove(item);
             return await _db.SaveChangesAsync();
         }
 
-        public async Task<T> Get(int id)
+        public async Task<TEntity> Get(int id)
         {
-            T entity = await Set.FindAsync(id);
+            TEntity entity = await Set.FindAsync(id);
             return entity;
         }
 
-        public IEnumerable<T> GetAll()
+        public async virtual Task<IEnumerable<TEntity>> Get(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            params string[] includeProperties)
+        {
+            IQueryable<TEntity> query = Set;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (string includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                return orderBy(query).ToList();
+            }
+            else
+            {
+                return query.ToList();
+            }
+        }
+
+        public IEnumerable<TEntity> GetAll()
         {
             return Set;
         }
 
-        public async Task<int> Update(T item)
+        public async Task<int> Update(TEntity item)
         {
             Set.Update(item);
             return await _db.SaveChangesAsync();

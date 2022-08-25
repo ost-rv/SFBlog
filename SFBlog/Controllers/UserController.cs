@@ -15,10 +15,11 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SFBlog.Models;
+using SFBlog.BLL.Models;
 
 namespace SFBlog.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class UserController : Controller
     {
         private IMapper _mapper;
@@ -37,47 +38,63 @@ namespace SFBlog.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost]
-        [Route("Authenticate")]
-        public async Task<UserViewModel> Authenticate(string login, string password)
+        [HttpGet]
+        public IActionResult Authenticate()
         {
-            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> Authenticate(UserAuthenticateViewModel model)
+        {
+            if (ModelState.IsValid)
             {
-                throw new ArgumentNullException("Запрос не корректен");
+                User user = _userRepository.GetByLogin(model.Login);
+
+                if (user != null && user.Password == model.Password)
+                {
+                    UserDomain userDomain = UserDomain.CreateUserDomain(user);
+                    await Authenticate(userDomain); // аутентификация
+                    return RedirectToAction("PostList", "Post");
+                    
+                }
+                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
 
-            User user = _userRepository.GetByLogin(login);
+            return View(model);
+        }
 
-            if (user is null)
-            { 
-                throw new AuthenticationException("Пользователь не найден"); 
-            }
-
-            if (user.Password != password)
-            {
-                throw new AuthenticationException("Введенный пароль не корректен");
-            }
-
-            _userRoleRepository.GetAll();
-            _roleRepository.GetAll();
-
+        private async Task Authenticate(UserDomain userDomain)
+        {
+            // создаем claim для логина и ролей
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.UserRoles.FirstOrDefault().Role.Name)
+                new Claim(ClaimsIdentity.DefaultNameClaimType, userDomain.Login),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, userDomain.Roles.FirstOrDefault()?.Name)
             };
 
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, 
+            // создаем объект ClaimsIdentity
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims,
                 "AppCookie",
                 ClaimsIdentity.DefaultNameClaimType,
                 ClaimsIdentity.DefaultRoleClaimType);
 
+            // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity));
-
-            return _mapper.Map<UserViewModel>(user);
         }
 
+        [AllowAnonymous]
+        [Route("Register")]
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View("Register");
+        }
+
+
+        [AllowAnonymous]
         [Route("Register")]
         [HttpPost]
         public async Task<string> Register(UserRegisterViewModel newUser)
@@ -88,14 +105,40 @@ namespace SFBlog.Controllers
 
                 UserRole userRole = new UserRole { User = user, RoleId = 3 /*Id роли пользованель*/ };
                 user.UserRoles.Add(userRole);
-                
+
+                // добавляем пользователя в бд
                 await _userRepository.Create(user);
-                
+                //await Authenticate(model.Login); // аутентификация
+
                 return "Успех!";
             }
             return string.Join("\r\n", ModelState.Values.SelectMany(v => v.Errors));
         }
 
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Account");
+        }
+
+        
+        //[Route("EditUser/{id?}")]
+        [HttpGet]
+        public async Task<IActionResult> EditUser(int id)
+        {
+            User user = await _userRepository.Get(id);
+            List<Role> allRoles = await Task.FromResult(_roleRepository.GetAll().ToList());
+            UserEditViewModel userEdit = _mapper.Map<UserEditViewModel>(user);
+            userEdit.CheckRoles = allRoles.Select(r => new CheckRoleViewModel
+            {
+                Id = r.Id,
+                Name = r.Name,
+                Checked = user.UserRoles.Any(ur => ur.RoleId == r.Id)
+            }).ToList();
+
+            return View(userEdit);
+
+        }
 
         [Authorize]
         [Route("EditUser")]
@@ -131,21 +174,14 @@ namespace SFBlog.Controllers
             return "Пользователь удален.";
         }
 
-        [Authorize(Roles = "Aдминистратор")]
+        //[Authorize(Roles = "Aдминистратор")]
         [HttpGet]
-        [Route("UserList")]
-        public List<UserViewModel> GetUserList()
+        public async Task<IActionResult> UserList()
         {
-            List<UserViewModel> resultUserList = new List<UserViewModel>();
+            var userList = await Task.FromResult(_userRepository.GetAll());
+            List<UserViewModel> resultUserList = _mapper.Map<List<UserViewModel>>(userList);
 
-            var userList = _userRepository.GetAll();
-
-            foreach (User user in userList)
-            {
-                resultUserList.Add(_mapper.Map<UserViewModel>(user));
-            }
-
-            return resultUserList;
+            return View(resultUserList);
         }
 
         [Authorize]

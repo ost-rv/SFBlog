@@ -2,10 +2,8 @@
 
 namespace SFBlog.Models
 {
-    public class TagEditViewModel
+    public class TagAddViewModel
     {
-        public int Id { get; set; }
-
         [Required(ErrorMessage = "Поле Название обязательно для заполнения")]
         [DataType(DataType.Text)]
         [Display(Name = "Название", Prompt = "Введите название")]

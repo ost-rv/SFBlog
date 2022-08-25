@@ -1,0 +1,29 @@
+﻿@model SFBlog.Models.TagAddViewModel
+
+@{
+    ViewData["Title"] = "Добавление тега";
+}
+
+
+<h4>Добавление тега</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Add">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Designation" class="control-label"></label>
+                <input asp-for="Designation" class="form-control" />
+                <span asp-validation-for="Designation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Перейти к списку всех тегов</a>
+</div>
+

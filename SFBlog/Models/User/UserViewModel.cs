@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SFBlog.Models
 {
@@ -19,6 +20,8 @@ namespace SFBlog.Models
         public string Email { get; set; }
 
         public string FullName { get { return string.Concat(FirstName, " ", LastName); } }
+
+        public List<RoleViewModel> Roles { get; set; }
 
     }
 }

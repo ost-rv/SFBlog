@@ -1,0 +1,31 @@
+﻿@model List<SFBlog.Models.UserViewModel>
+
+@{
+    ViewData["Title"] = "Все пользователи";
+}
+
+<h4>Все пользователи</h4>
+
+<p>
+    <a asp-controller="User" asp-action="Register">Добавить пользователя</a>
+</p>
+@foreach(var user in Model)
+{
+    <div class="form-group">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a asp-controller="User" asp-action="EditUser" asp-route-id="@user.Id">@user.FullName</a>
+                </h5>
+                <div>
+                    @foreach (var role in user.Roles)
+                    {
+                        <span class="badge bg-success text-light">@role.Name</span>
+                    }
+                </div>
+                <p class="card-text">@user.Email</p>
+            </div>
+        </div>
+    </div>
+}
+

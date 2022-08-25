@@ -4,13 +4,10 @@ using System.Collections.Generic;
 
 namespace SFBlog.Models
 {
-    public class TagViewModel
+    public class TagLightViewModel
     {
         public int Id { get; set; }
         public string Designation { get; set; }
 
-        public ICollection<Post> Posts { get; set; }
-
-        public int CountPost => Posts?.Count ?? 0;
     }
 }

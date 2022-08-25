@@ -1,0 +1,66 @@
+﻿@model SFBlog.Models.UserEditViewModel
+
+@{
+    ViewData["Title"] = "Редактирование пользователя";
+}
+
+
+<h4>Редактирование пользователя</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="EditUserView">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @for (int i = 0; i < Model.CheckRoles.Count(); i++)
+                {
+                    <input asp-for="CheckRoles[i].Id" type="hidden"/>
+                    <input asp-for="CheckRoles[i].Checked" type="checkbox"/>
+                    <label asp-for="CheckRoles[i].Name">@Model.CheckRoles[i].Name</label>
+                }
+            </div>
+            <div class="form-group">
+                <input asp-for="Id" class="form-control" type="hidden"/>
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Login" class="control-label"></label>
+                <input asp-for="Login" class="form-control" />
+                <span asp-validation-for="Login" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PasswordConfirm" class="control-label"></label>
+                <input asp-for="PasswordConfirm" class="form-control" />
+                <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Перейти к списку пользователей</a>
+</div>
+

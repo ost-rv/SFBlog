@@ -84,26 +84,18 @@ namespace SFBlog.Controllers
             return "Пост удален.";
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
-        [Route("CommentList")]
-        public List<CommentViewModel> GetCommentList()
+        public async Task<IActionResult> CommentList()
         {
-            List<CommentViewModel> resultCommentList = new List<CommentViewModel>();
+            var commentList = await Task.FromResult(_commentRepository.GetAll());
+            List<CommentViewModel> resultCommetList = _mapper.Map<List<CommentViewModel>>(commentList);
 
-            var commentList = _commentRepository.GetAll();
-
-            foreach (Comment comment in commentList)
-            {
-                resultCommentList.Add(_mapper.Map<CommentViewModel>(comment));
-            }
-
-            return resultCommentList;
+            return View(resultCommetList);
         }
 
         [Authorize]
         [HttpGet]
-        [Route("Comment")]
         public async Task<CommentViewModel> GetComment(int commentId)
         {
             CommentViewModel resultComment = new CommentViewModel();

@@ -23,24 +23,38 @@ namespace SFBlog.Controllers
         private IMapper _mapper;
         private IUnitOfWork _UoW;
         private Repository<Post> _postRepository;
+        private Repository<Tag> _tagRepository;
 
         public PostController(IMapper mapper, IUnitOfWork UoW)
         {
             _mapper = mapper;
             _UoW = UoW;
             _postRepository = (Repository<Post>)_UoW.GetRepository<Post>();
+            _tagRepository = (Repository<Tag>)_UoW.GetRepository<Tag>();
         }
 
-        [Route("AddPost")]
+        [HttpGet]
+        public async Task<IActionResult> AddPost()
+        {
+
+            PostEditViewModel post = new PostEditViewModel();
+
+            var tags = await Task.FromResult(_tagRepository.GetAll());
+
+            post.CheckTags = tags.Select(t => new CheckTagViewModel { Id = t.Id, Designation = t.Designation, Checked = false }).ToList();
+
+            return View(post);
+        }
+
         [HttpPost]
-        public async Task<string> Add(PostEditViewModel newPost, int userId)
+        public async Task<string> AddPost(PostEditViewModel newPost)
         {
             if (ModelState.IsValid)
             {
                 var post = _mapper.Map<Post>(newPost);
 
                 post.DateAdd = DateTime.Now;
-                post.UserId = userId;
+                //post.UserId = userId;
 
                 await _postRepository.Create(post);
                 return "Успех!";
@@ -48,9 +62,23 @@ namespace SFBlog.Controllers
             return string.Join("\r\n", ModelState.Values.SelectMany(v => v.Errors));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> EditPost(int id)
+        {
+            Post post = (await Task.FromResult(_postRepository.Get(p => p.Id == id, null, "PostTags"))).Result.FirstOrDefault();
+            List<Tag> allTags = await Task.FromResult(_tagRepository.GetAll().ToList());
+            PostEditViewModel postEdit = _mapper.Map<PostEditViewModel>(post);
+            postEdit.CheckTags = allTags.Select(t => new CheckTagViewModel
+            {
+                Id = t.Id,
+                Designation = t.Designation,
+                Checked = post.PostTags.Any(pt => pt.TagId == t.Id)
+            }).ToList();
 
-        [Authorize]
-        [Route("EditPost")]
+            return View(postEdit);
+        }
+
+        //[Authorize]
         [HttpPut]
         public async Task<string> Update(PostEditViewModel model)
         {
@@ -84,33 +112,30 @@ namespace SFBlog.Controllers
             return "Пост удален.";
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
-        [Route("PostList")]
-        public List<PostViewModel> GetPostList()
+        public async Task<IActionResult> PostList()
         {
-            List<PostViewModel> resultPostList = new List<PostViewModel>();
+            var postList = await Task.FromResult(_postRepository.GetAll());
+            List<PostViewModel> resultPostList = _mapper.Map<List<PostViewModel>>(postList);
 
-            var postList = _postRepository.GetAll();
-
-            foreach (Post post in postList)
-            {
-                resultPostList.Add(_mapper.Map<PostViewModel>(post));
-            }
-
-            return resultPostList;
+            return View(resultPostList);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
-        [Route("Post")]
-        public async Task<PostViewModel> GetPost(int postId)
+        public async Task<IActionResult> ViewPost(int id)
         {
-            PostViewModel resultPost = new PostViewModel();
+            Post post = (await Task.FromResult(_postRepository.Get(p => p.Id == id, 
+                null, 
+                "PostTags", 
+                "User", 
+                "Comments"))).Result.FirstOrDefault();
+            
+            List<Tag> allTags = await Task.FromResult(_tagRepository.GetAll().ToList());
+            PostViewModel postView = _mapper.Map<PostViewModel>(post);
 
-            Post post = await _postRepository.Get(postId);
-
-            return _mapper.Map<PostViewModel>(post);
+            return View(postView);
         }
     }
 }

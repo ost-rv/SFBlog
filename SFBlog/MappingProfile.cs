@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SFBlog.Models;
 using SFBlog.DAL.Models;
+using SFBlog.BLL.Models;
 
 namespace SFBlog
 {
@@ -9,31 +10,39 @@ namespace SFBlog
         public MappingProfile()
         {
             CreateMap<User, UserEditViewModel>();
-            CreateMap<User, UserViewModel>();
+            CreateMap<User, UserViewModel>()
+                .ForMember(dst => dst.Roles, src => src.MapFrom(c => c.UserRoles));
             
-            CreateMap<Post, PostViewModel>();
+            CreateMap<Post, PostViewModel>()
+                .ForMember(dst => dst.Tags, src => src.MapFrom(c => c.PostTags))
+                .ForMember(dst => dst.Author, src => src.MapFrom(c => c.User.Email));
             CreateMap<Post, PostEditViewModel>();
+            CreateMap<Post, PostLightViewModel>();
 
-            CreateMap<Comment, CommentViewModel>();
+            CreateMap<PostTag, TagViewModel>()
+                .ForMember(dst => dst.Id, src => src.MapFrom(c => c.TagId))
+                .ForMember(dst => dst.Designation, src => src.MapFrom(c => c.Tag.Designation));
+            CreateMap<PostTag, TagLightViewModel>()
+                .ForMember(dst => dst.Id, src => src.MapFrom(c => c.TagId))
+                .ForMember(dst => dst.Designation, src => src.MapFrom(c => c.Tag.Designation));
+
+            CreateMap<Comment, CommentViewModel>()
+                .ForMember(dst => dst.Author, src => src.MapFrom(c => c.User.Email));
             CreateMap<Comment, CommentEditViewModel>();
 
-            CreateMap<Tag, TagViewModel>();
+            CreateMap<Tag, TagViewModel>()
+                .ForMember(dst => dst.Posts, srs => srs.MapFrom(c => c.PostTags));
             CreateMap<Tag, TagEditViewModel>();
 
+            CreateMap<TagDomain, TagViewModel>();
 
+            CreateMap<Role, RoleViewModel>();
+            CreateMap<Role, RoleEditViewModel>();
+            
+            CreateMap<UserRole, RoleViewModel>()
+                .ForMember(dst => dst.Id, src => src.MapFrom(c => c.RoleId))
+                .ForMember(dst => dst.Name, src => src.MapFrom(c => c.Role.Name));
 
-
-            //CreateMap<RegisterViewModel, User>()
-            //    .ForMember(x => x.BirthDate, opt => opt.MapFrom(c => new DateTime((int)c.Year, (int)c.Month, (int)c.Day)))
-            //    .ForMember(x => x.Email, opt => opt.MapFrom(c => c.EmailReg))
-            //    .ForMember(x => x.UserName, opt => opt.MapFrom(c => c.Login));
-            //CreateMap<LoginViewModel, User>();
-
-            //CreateMap<UserEditViewModel, User>();
-            //CreateMap<User, UserEditViewModel>().ForMember(x => x.UserId, opt => opt.MapFrom(c => c.Id));
-
-            //CreateMap<UserWithFriendExt, User>();
-            //CreateMap<User, UserWithFriendExt>();
         }
     }
 }

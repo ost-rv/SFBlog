@@ -18,6 +18,7 @@ using SFBlog.Models;
 
 namespace SFBlog.Controllers
 {
+    //[Route("Tag")]
     public class TagController : Controller
     {
         private IMapper _mapper;
@@ -31,9 +32,17 @@ namespace SFBlog.Controllers
             _tagRepository = (Repository<Tag>)_UoW.GetRepository<Tag>();
         }
 
+        [AllowAnonymous]
+        [Route("AddTag")]
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View();
+        }
+
         [Route("AddTag")]
         [HttpPost]
-        public async Task<string> Add(TagEditViewModel newTag, int userId)
+        public async Task<string> AddTag(TagEditViewModel newTag, int userId)
         {
             if (ModelState.IsValid)
             {
@@ -44,6 +53,17 @@ namespace SFBlog.Controllers
                 return "Успех!";
             }
             return string.Join("\r\n", ModelState.Values.SelectMany(v => v.Errors));
+        }
+
+        
+        
+        [HttpGet]
+        public async Task<IActionResult> EditTag(int id)
+        {
+            Tag tag = await _tagRepository.Get(id);
+            TagEditViewModel tagEdit = _mapper.Map<TagEditViewModel>(tag);
+
+            return View(tagEdit);
         }
 
 
@@ -82,21 +102,14 @@ namespace SFBlog.Controllers
             return "Тэг удален.";
         }
 
-        [Authorize]
+        
         [HttpGet]
-        [Route("TagList")]
-        public List<TagViewModel> GetTagList()
+        public async Task<IActionResult> TagList()
         {
-            List<TagViewModel> resultTagList = new List<TagViewModel>();
+            var tagList = await Task.FromResult(_tagRepository.GetAll());
+            List<TagViewModel> resultTagList = _mapper.Map<List<TagViewModel>>(tagList);
 
-            var tagList = _tagRepository.GetAll();
-
-            foreach (Tag tag in tagList)
-            {
-                resultTagList.Add(_mapper.Map<TagViewModel>(tag));
-            }
-
-            return resultTagList;
+            return View(resultTagList);
         }
 
         [Authorize]

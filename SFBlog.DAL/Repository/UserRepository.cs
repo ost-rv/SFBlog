@@ -1,4 +1,5 @@
-﻿using SFBlog.DAL.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using SFBlog.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,10 @@ namespace SFBlog.DAL.Repository
 
         public User GetByLogin(string login)
         {
-            return Set.FirstOrDefault(u => u.Login == login);
+            return _db.Set<User>()
+                .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+                .FirstOrDefault(u => u.Login == login);
         }
     }
 }

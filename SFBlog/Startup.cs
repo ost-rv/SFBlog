@@ -15,6 +15,7 @@ using SFBlog.DAL.Repository;
 using SFBlog.DAL.UoW;
 using AutoMapper;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace SFBlog
 {
@@ -49,8 +50,8 @@ namespace SFBlog
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "SFBlog", Version = "v1" });
             //});
 
-            services.AddAuthentication(options => options.DefaultScheme = "Cookies").
-                AddCookie("Cookies", options =>
+            services.AddAuthentication(options => options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme).
+                AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
                 {
                     options.Events = new Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents
                     {
@@ -63,9 +64,10 @@ namespace SFBlog
                 });
 
             //services.AddControllers();
-            services.AddEndpointsApiExplorer();
+            //services.AddEndpointsApiExplorer();
+            // добавляем поддержку контроллеров с представлениями
             services.AddControllersWithViews();
-            services.AddSwaggerGen();
+            //services.AddSwaggerGen();
 
         }
 
@@ -75,31 +77,55 @@ namespace SFBlog
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(options =>
-                {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-                    options.RoutePrefix = string.Empty; //Предоставить пользовательский интерфейс Swagger в корневом каталоге приложения
-                });
+                //app.UseSwagger();
+                //app.UseSwaggerUI(options =>
+                //{
+                //    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                //    //options.RoutePrefix = string.Empty; //Предоставить пользовательский интерфейс Swagger в корневом каталоге приложения
+                //});
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                //app.UseHsts();
             }
+            //Перенаправляет все запросы HTTP на HTTPS.
             app.UseHttpsRedirection();
+            
+            //Отдавать статические файлы клиенту
             app.UseStaticFiles();
+            //app.UseDefaultFiles();
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+            //app.UseHttpLogging();
+
+            //Добавляем компонент для логирования запросов с использованием метода Use.
+            app.Use(async (context, next) =>
+            {
+                // Для логирования данных о запросе используем свойста объекта HttpContext
+                Console.WriteLine($"[{DateTime.Now}]: New request to http://{context.Request.Host.Value + context.Request.Path}");
+                await next.Invoke();
+            });
+
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Post}/{action=PostList}/{id?}"
+                    );
+
+                //endpoints.MapGet("/index.html", context => 
+                //{
+                //    context.Response.Redirect("Home/Index", true);
+                //    return Task.FromResult(0);
+                //});
             });
+
+            
         }
     }
 }

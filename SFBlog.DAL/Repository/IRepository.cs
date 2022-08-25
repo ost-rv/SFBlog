@@ -1,14 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace SFBlog.DAL.Repository
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<TEntity> where TEntity : class
     {
-        IEnumerable<T> GetAll();
-        Task<T> Get(int id);
-        Task<int> Create(T item);
-        Task<int> Update(T item);
-        Task<int> Delete(T item);
+        IEnumerable<TEntity> GetAll();
+        Task<TEntity> Get(int id);
+
+        public Task<IEnumerable<TEntity>> Get(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            params string[] includeProperties);
+
+        Task<int> Create(TEntity item);
+        Task<int> Update(TEntity item);
+        Task<int> Delete(TEntity item);
     }
 }

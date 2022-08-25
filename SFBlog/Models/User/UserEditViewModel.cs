@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SFBlog.Models
 {
@@ -33,12 +34,14 @@ namespace SFBlog.Models
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Обязательно подтвердите пароль")]
-        [Compare("PasswordReg", ErrorMessage = "Пароли не совпадают")]
+        [Compare("Password", ErrorMessage = "Пароли не совпадают")]
         [DataType(DataType.Password)]
         [Display(Name = "Подтвердить пароль", Prompt = "Введите пароль повторно")]
         public string PasswordConfirm { get; set; }
 
         public string FullName { get { return string.Concat(FirstName, " ", LastName); } }
+
+        public List<CheckRoleViewModel> CheckRoles { get; set; }
 
     }
 }
