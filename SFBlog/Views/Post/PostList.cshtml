@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SFBlog.Models.PostViewModel>
 
 @{
-    ViewData["Title"] = "PostList";
+    ViewData["Title"] = "Посты";
 }
 
 <p>
@@ -28,7 +28,9 @@
                             <button type="button" class="btn btn-outline-secondary">
                                 <a asp-controller="Post" asp-action="EditPost" asp-route-id="@post.Id">Редактировать</a>
                             </button>
-                            <button type="button" class="btn btn-outline-danger">Удалить</button>
+                            <button type="button" class="btn btn-outline-danger">
+                                <a asp-controller="Post" asp-action="Delete" asp-route-id="@post.Id">Удалить</a>
+                            </button>
                         </div>
                     }
                     <div class="card-text text-right">Просмотров @post.ViewCount</div>

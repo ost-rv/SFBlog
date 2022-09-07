@@ -15,33 +15,43 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SFBlog.Models;
+using SFBlog.Extensions;
 
 namespace SFBlog.Controllers
 {
-    //[Route("Role")]
     public class RoleController : Controller
     {
+        private readonly ILogger<UserController> _logger;
         private IMapper _mapper;
         private IUnitOfWork _UoW;
         private Repository<Role> _roleRepository;
 
-        public RoleController(IMapper mapper, IUnitOfWork UoW)
+        public RoleController(IMapper mapper, IUnitOfWork UoW, ILogger<UserController> logger)
         {
             _mapper = mapper;
             _UoW = UoW;
             _roleRepository = (Repository<Role>)_UoW.GetRepository<Role>();
+            _logger = logger;
         }
 
-        [Route("AddRole")]
+        /// <summary>
+        /// Запрос View добовления роли
+        /// </summary>
+        /// <returns>View добовления роли</returns>
+        [Authorize(Roles="Администратор")]
         [HttpGet]
         public IActionResult AddRole()
         {
             return View(); 
         }
-
-        [Route("AddRole")]
+        /// <summary>
+        /// Добовление роли
+        /// </summary>
+        /// <param name="newTag"></param>
+        /// <returns>View список ролей</returns>
+        [Authorize(Roles = "Администратор")]
         [HttpPost]
-        public async Task<string> AddRole(RoleEditViewModel newRole, int userId)
+        public async Task<IActionResult> AddRole(RoleEditViewModel newRole)
         {
             if (ModelState.IsValid)
             {
@@ -49,11 +59,23 @@ namespace SFBlog.Controllers
 
 
                 await _roleRepository.Create(role);
-                return "Успех!";
+                _logger.LogInformation($"Пользователь {User.Identity.Name} добавил роль {role.Description}.");
+                return View("RoleList");
             }
-            return string.Join("\r\n", ModelState.Values.SelectMany(v => v.Errors));
+            else
+            {
+                _logger.LogInformation(ModelState.GetAllError());
+            }
+
+            return View(newRole);
         }
 
+        /// <summary>
+        /// Запрос View для редактирования роли
+        /// </summary>
+        /// <param name="id">Идентификатор роли</param>
+        /// <returns>View для редактирования роли</returns>
+        [Authorize(Roles = "Администратор")]
         [HttpGet]
         public async Task<IActionResult> EditRole(int id)
         {
@@ -63,42 +85,58 @@ namespace SFBlog.Controllers
             return View(roleEdit);
         }
 
-        [Authorize]
-        [Route("EditRole")]
+        /// <summary>
+        /// Редактирование роли
+        /// </summary>
+        /// <param name="model">ViewModel редактирования роли</param>
+        /// <returns></returns>
+        [Authorize(Roles = "Администратор")]
         [HttpPut]
-        public async Task<string> Update(RoleEditViewModel model)
+        public async Task<IActionResult> EditRole(RoleEditViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var role = await _roleRepository.Get(model.Id);
 
                 await _roleRepository.Update(role);
+                _logger.LogInformation($"Пользователь {User.Identity.Name} отредактировал роль id = {role.Id} {role.Description}");
 
-                return "Успех!";
+                return View("RoleList");
             }
             else
             {
-                return string.Join("\r\n", ModelState.Values.SelectMany(v => v.Errors));
+                _logger.LogInformation(ModelState.GetAllError());
             }
+
+            return View(model);
         }
 
-
-        [Authorize]
-        [Route("DeleteRole")]
+        /// <summary>
+        /// Удалить роль
+        /// </summary>
+        /// <param name="id">Идентификатор роли</param>
+        /// <returns>View списка ролей</returns>
+        [Authorize(Roles = "Администратор")]
         [HttpDelete]
-        public async Task<string> Delete(int roleId)
+        public async Task<IActionResult> Delete(int roleId)
         {
             Role role = await _roleRepository.Get(roleId);
             if (role is null)
             {
-                return $"Тэг с Id = {roleId} не найден";
+                return View("NotFound");
             }
 
             await _roleRepository.Delete(role);
-            return "Роль удалена.";
+            _logger.LogInformation($"Пользователь {User.Identity.Name} удалил роль {role.Description}.");
+            return RedirectToAction("RoleList");
         }
 
 
+        /// <summary>
+        /// Получить View список ролей
+        /// </summary>
+        /// <returns>View списка ролей</returns>
+        [Authorize(Roles = "Администратор")]
         [HttpGet]
         public async Task<IActionResult> RoleList()
         {
@@ -108,16 +146,19 @@ namespace SFBlog.Controllers
             return View(resultRoleList);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Администратор")]
         [HttpGet]
-        [Route("Role")]
-        public async Task<RoleViewModel> GetRole(int roleId)
+        public async Task<IActionResult> ViewRole(int id)
         {
-            RoleViewModel resultRole = new RoleViewModel();
 
-            Role role = await _roleRepository.Get(roleId);
+            Role role = await _roleRepository.Get(id);
+            if (role == null)
+            {
+                _logger.LogInformation($"Роль с Id = {id} не найдена.");
+                return View("NotFound");
+            }
 
-            return _mapper.Map<RoleViewModel>(role);
+            return View(_mapper.Map<RoleViewModel>(role));
         }
     }
 }

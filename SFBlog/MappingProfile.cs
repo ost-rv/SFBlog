@@ -2,6 +2,7 @@
 using SFBlog.Models;
 using SFBlog.DAL.Models;
 using SFBlog.BLL.Models;
+using System.Linq;
 
 namespace SFBlog
 {
@@ -18,6 +19,11 @@ namespace SFBlog
                 .ForMember(dst => dst.Author, src => src.MapFrom(c => c.User.Email));
             CreateMap<Post, PostEditViewModel>();
             CreateMap<Post, PostLightViewModel>();
+            CreateMap<PostEditViewModel, Post>()
+                .ForMember(dst => dst.PostTags, 
+                           src => src.MapFrom(c => c.CheckTags
+                                                .Where(t => t.Checked)
+                                                .Select(t => new PostTag { TagId = t.Id})));
 
             CreateMap<PostTag, TagViewModel>()
                 .ForMember(dst => dst.Id, src => src.MapFrom(c => c.TagId))

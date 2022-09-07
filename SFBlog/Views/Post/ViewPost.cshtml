@@ -20,15 +20,24 @@
 <hr />
 <div class="card-text text-right">@Model.Author</div>
  
-<h6>Коментарии к статье</h6>
+@{
+    await Html.RenderPartialAsync("_AddComment", new CommentEditViewModel{ PostId = Model.Id , Id = 0});
+}
+
+@{
+    await Html.RenderPartialAsync("../Comment/_PostCommentList", Model.Comments);
+}
+
+@*<h6>Коментарии к статье</h6>
 <div class="form-floating">
-    <textarea class="form-control" placeholder="Ваш комментарий" id="floatingTextarea2" style="height: 100px"></textarea>
+    @*<textarea class="comment-text col-md-12" rows="10" placeholder="Ваш комментарий" id="floatingTextarea2" style="height: 100px"></textarea>*@
+    @*<textarea class="form-control" placeholder="Ваш комментарий" id="floatingTextarea2" style="height: 100px"></textarea>
 </div>
 <div class="form-group">
     <input type="submit" value="Оставить комментарий" class="btn btn-primary" />
-    </div>
+ </div>*@
 
-@foreach(var comment in Model.Comments)
+@*@foreach(var comment in Model.Comments)
 {
     <div class="card">
         <div class="card-body">@comment.Content</div>
@@ -37,5 +46,5 @@
         <span class="badge bg-success text-light">@comment.Author</span>
     </p>
     
-}
+}*@
 

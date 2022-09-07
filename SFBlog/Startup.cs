@@ -16,14 +16,20 @@ using SFBlog.DAL.UoW;
 using AutoMapper;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using NLog;
+using NLog.Web;
+using SFBlog.Middlewares;
 
 namespace SFBlog
 {
     public class Startup
     {
+        Logger _logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+        
         public Startup(IConfiguration configuration)
-        {
+        { 
             Configuration = configuration;
+            _logger.Debug("init main");
         }
 
         public IConfiguration Configuration { get; }
@@ -31,6 +37,7 @@ namespace SFBlog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<SFBlogDbContext>(options => options.UseSqlite(connection), ServiceLifetime.Singleton);
 
@@ -68,12 +75,16 @@ namespace SFBlog
             // добавляем поддержку контроллеров с представлениями
             services.AddControllersWithViews();
             //services.AddSwaggerGen();
+            
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //промежуточное ПО логирования запросов
+            app.UseLog();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -86,22 +97,23 @@ namespace SFBlog
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                //app.UseHsts();
+                //Промежуточно ПО глобальный обработчик исключений
+                app.UseErrorHandler();
+                //Принудительное применение HTTPS
+                app.UseHsts();
             }
-            //Перенаправляет все запросы HTTP на HTTPS.
-            app.UseHttpsRedirection();
-            
+            // обработка ошибок HTTP
+            //app.UseStatusCodePages();
+            //app.UseStatusCodePagesWithRedirects();
+            //app.UseStatusCodePagesWithReExecute();
+
             //Отдавать статические файлы клиенту
             app.UseStaticFiles();
-            //app.UseDefaultFiles();
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
-            //app.UseHttpLogging();
-
+            
             //Добавляем компонент для логирования запросов с использованием метода Use.
             app.Use(async (context, next) =>
             {
@@ -110,22 +122,13 @@ namespace SFBlog
                 await next.Invoke();
             });
 
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Post}/{action=PostList}/{id?}"
                     );
-
-                //endpoints.MapGet("/index.html", context => 
-                //{
-                //    context.Response.Redirect("Home/Index", true);
-                //    return Task.FromResult(0);
-                //});
             });
-
-            
         }
     }
 }

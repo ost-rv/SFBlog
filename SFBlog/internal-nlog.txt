@@ -1,0 +1,443 @@
+2022-09-03 19:23:50.6313 Info Message Template Auto Format enabled
+2022-09-03 19:23:50.6678 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 19:23:50.9402 Info Adding target FileTarget(Name=allfile)
+2022-09-03 19:23:51.0612 Info Adding target FileTarget(Name=ownFile-web)
+2022-09-03 19:23:51.0672 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-03 19:23:51.1987 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=56, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-03 19:23:57.5940 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=56, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-03 20:22:41.7343 Info Message Template Auto Format enabled
+2022-09-03 20:22:41.7652 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 20:22:41.9311 Info Adding target FileTarget(Name=allfile)
+2022-09-03 20:22:41.9532 Info Adding target FileTarget(Name=ownFile-web)
+2022-09-03 20:22:41.9571 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-03 20:22:42.0224 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=56, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-03 20:22:45.4668 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=56, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-03 20:23:39.1942 Info Message Template Auto Format enabled
+2022-09-03 20:23:39.2171 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 20:23:39.4636 Info Adding target FileTarget(Name=allfile)
+2022-09-03 20:23:39.4926 Info Adding target FileTarget(Name=ownFile-web)
+2022-09-03 20:23:39.4926 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-03 20:23:39.5590 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=56, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-03 20:23:41.6376 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=56, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-03 20:26:10.2881 Info Message Template Auto Format enabled
+2022-09-03 20:26:10.4066 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 20:26:10.7755 Info Adding target FileTarget(Name=allfile)
+2022-09-03 20:26:10.9056 Info Adding target FileTarget(Name=ownFile-web)
+2022-09-03 20:26:10.9084 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-03 20:26:10.9762 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=56, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-03 20:26:13.4674 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=56, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-03 20:31:13.9155 Info Message Template Auto Format enabled
+2022-09-03 20:31:13.9478 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 20:31:14.1775 Info Adding target FileTarget(Name=allfile)
+2022-09-03 20:31:14.2086 Info Adding target FileTarget(Name=ownFile-web)
+2022-09-03 20:31:14.2086 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-03 20:31:14.2850 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=56, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-03 20:31:16.6106 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=56, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-03 20:35:00.5119 Info Message Template Auto Format enabled
+2022-09-03 20:35:00.5885 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 20:35:00.9176 Info Adding target FileTarget(Name=allfile)
+2022-09-03 20:35:00.9619 Info Adding target FileTarget(Name=ownFile-web)
+2022-09-03 20:35:00.9765 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-03 20:35:01.0629 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=56, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-03 20:35:04.1354 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=56, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-03 20:40:57.0516 Info Message Template Auto Format enabled
+2022-09-03 20:40:57.0786 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 20:40:57.2675 Info Adding target FileTarget(Name=allfile)
+2022-09-03 20:40:57.2906 Info Adding target FileTarget(Name=ownFile-web)
+2022-09-03 20:40:57.2906 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-03 20:40:57.3669 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=56, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-03 20:40:59.8841 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=56, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-03 20:42:19.0308 Info Message Template Auto Format enabled
+2022-09-03 20:42:19.0621 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 20:42:19.2224 Info Adding target FileTarget(Name=allfile)
+2022-09-03 20:42:19.2458 Info Adding target FileTarget(Name=ownFile-web)
+2022-09-03 20:42:19.2458 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-03 20:42:19.3174 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=56, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-03 20:42:21.9851 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=56, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 09:37:37.6386 Info Message Template Auto Format enabled
+2022-09-04 09:37:37.6649 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 09:37:37.9501 Info Adding target FileTarget(Name=allfile)
+2022-09-04 09:37:38.0214 Info Validating config: TargetNames=allfile, ConfigItems=22, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 09:38:37.9937 Info Message Template Auto Format enabled
+2022-09-04 09:38:38.1384 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 09:38:38.8789 Info Adding target FileTarget(Name=allfile)
+2022-09-04 09:38:39.0101 Info Validating config: TargetNames=allfile, ConfigItems=22, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 09:38:45.7142 Info Validating config: TargetNames=allfile, ConfigItems=22, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 09:39:34.2157 Info Message Template Auto Format enabled
+2022-09-04 09:39:34.3435 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 09:39:34.6841 Info Adding target FileTarget(Name=allfile)
+2022-09-04 09:39:34.7695 Info Validating config: TargetNames=allfile, ConfigItems=22, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 09:39:36.7414 Info Validating config: TargetNames=allfile, ConfigItems=22, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 09:40:37.7166 Info Message Template Auto Format enabled
+2022-09-04 09:40:37.7419 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 09:40:37.8881 Info Adding target FileTarget(Name=allfile)
+2022-09-04 09:40:37.9471 Info Validating config: TargetNames=allfile, ConfigItems=22, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 09:40:39.6953 Info Validating config: TargetNames=allfile, ConfigItems=22, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 09:49:35.9237 Info Message Template Auto Format enabled
+2022-09-04 09:49:35.9521 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 09:49:36.1139 Info Adding target FileTarget(Name=allfile)
+2022-09-04 09:49:36.1139 Info Adding target FileTarget(Name=allerrorfile)
+2022-09-04 09:49:36.1919 Info Validating config: TargetNames=allfile, allerrorfile, ConfigItems=44, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 09:49:37.9671 Info Validating config: TargetNames=allfile, allerrorfile, ConfigItems=44, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 09:51:26.6880 Info Message Template Auto Format enabled
+2022-09-04 09:51:26.7176 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 09:51:26.8927 Info Adding target FileTarget(Name=allfile)
+2022-09-04 09:51:26.8927 Info Adding target FileTarget(Name=allerrorfile)
+2022-09-04 09:51:26.9577 Info Validating config: TargetNames=allfile, allerrorfile, ConfigItems=44, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 09:51:28.9705 Info Validating config: TargetNames=allfile, allerrorfile, ConfigItems=44, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 09:53:20.5445 Info Message Template Auto Format enabled
+2022-09-04 09:53:20.5824 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 09:53:20.7446 Info Adding target FileTarget(Name=allfile)
+2022-09-04 09:53:20.7446 Info Adding target FileTarget(Name=allerrorfile)
+2022-09-04 09:53:20.8220 Info Validating config: TargetNames=allfile, allerrorfile, ConfigItems=44, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 09:53:22.9931 Info Validating config: TargetNames=allfile, allerrorfile, ConfigItems=44, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 10:02:55.8361 Info Message Template Auto Format enabled
+2022-09-04 10:02:55.8614 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 10:02:56.0154 Info Adding target FileTarget(Name=allfile)
+2022-09-04 10:02:56.0154 Info Adding target FileTarget(Name=allerrorfile)
+2022-09-04 10:02:56.0154 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-04 10:02:56.0797 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-04 10:02:56.1354 Info Validating config: TargetNames=allfile, allerrorfile, lifetimeConsole, ConfigItems=48, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 10:02:57.8916 Info Validating config: TargetNames=allfile, allerrorfile, lifetimeConsole, ConfigItems=48, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 11:03:07.8281 Info Message Template Auto Format enabled
+2022-09-04 11:03:07.8614 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 11:03:08.0545 Info Adding target FileTarget(Name=AllFile)
+2022-09-04 11:03:08.0651 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-04 11:03:08.0651 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-04 11:03:08.0651 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-04 11:03:08.0651 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-04 11:03:08.1204 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-04 11:03:08.1652 Info Validating config: Targets=5, ConfigItems=82, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 11:03:10.2441 Info Validating config: Targets=5, ConfigItems=82, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 11:04:48.0025 Info Message Template Auto Format enabled
+2022-09-04 11:04:48.0339 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 11:04:48.1964 Info Adding target FileTarget(Name=AllFile)
+2022-09-04 11:04:48.1964 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-04 11:04:48.1964 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-04 11:04:48.1964 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-04 11:04:48.2034 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-04 11:04:48.2430 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-04 11:04:48.2925 Info Validating config: Targets=5, ConfigItems=82, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 11:04:50.3221 Info Validating config: Targets=5, ConfigItems=82, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 11:10:45.7003 Info Message Template Auto Format enabled
+2022-09-04 11:10:45.7305 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 11:10:45.8823 Info Adding target FileTarget(Name=AllFile)
+2022-09-04 11:10:45.8823 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-04 11:10:45.8823 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-04 11:10:45.8823 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-04 11:10:45.8908 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-04 11:10:45.9286 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-04 11:10:45.9664 Info Validating config: Targets=5, ConfigItems=82, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 11:10:47.9284 Info Validating config: Targets=5, ConfigItems=82, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 11:12:32.7190 Info Message Template Auto Format enabled
+2022-09-04 11:12:32.7522 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 11:12:32.9209 Info Adding target FileTarget(Name=AllFile)
+2022-09-04 11:12:32.9251 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-04 11:12:32.9251 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-04 11:12:32.9251 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-04 11:12:32.9251 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-04 11:12:32.9786 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-04 11:12:33.0299 Info Validating config: Targets=5, ConfigItems=84, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 11:12:35.0534 Info Validating config: Targets=5, ConfigItems=84, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 11:14:33.9923 Info Message Template Auto Format enabled
+2022-09-04 11:14:34.0214 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 11:14:34.2152 Info Adding target FileTarget(Name=AllFile)
+2022-09-04 11:14:34.2197 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-04 11:14:34.2197 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-04 11:14:34.2197 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-04 11:14:34.2197 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-04 11:14:34.2774 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-04 11:14:34.3224 Info Validating config: Targets=5, ConfigItems=84, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 11:14:36.4042 Info Validating config: Targets=5, ConfigItems=84, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 11:17:20.5328 Info Message Template Auto Format enabled
+2022-09-04 11:17:20.5669 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 11:17:20.7496 Info Adding target FileTarget(Name=AllFile)
+2022-09-04 11:17:20.7496 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-04 11:17:20.7496 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-04 11:17:20.7496 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-04 11:17:20.7496 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-04 11:17:20.8059 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-04 11:17:20.8561 Info Validating config: Targets=5, ConfigItems=84, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 11:17:23.1536 Info Validating config: Targets=5, ConfigItems=84, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 11:41:17.7971 Info Message Template Auto Format enabled
+2022-09-04 11:41:17.8257 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 11:41:18.0040 Info Adding target FileTarget(Name=AllFile)
+2022-09-04 11:41:18.0040 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-04 11:41:18.0040 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-04 11:41:18.0040 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-04 11:41:18.0040 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-04 11:41:18.0536 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-04 11:41:18.0939 Info Validating config: Targets=5, ConfigItems=84, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 11:41:20.1582 Info Validating config: Targets=5, ConfigItems=84, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 13:05:28.8777 Info Message Template Auto Format enabled
+2022-09-04 13:05:28.9118 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 13:05:29.1365 Info Adding target FileTarget(Name=AllFile)
+2022-09-04 13:05:29.1403 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-04 13:05:29.1403 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-04 13:05:29.1403 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-04 13:05:29.1403 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-04 13:05:29.1403 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-04 13:05:29.1870 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-04 13:05:29.2320 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 13:05:31.4101 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 13:07:05.8786 Info Message Template Auto Format enabled
+2022-09-04 13:07:05.9067 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 13:07:06.0531 Info Adding target FileTarget(Name=AllFile)
+2022-09-04 13:07:06.0531 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-04 13:07:06.0626 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-04 13:07:06.0626 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-04 13:07:06.0626 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-04 13:07:06.0626 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-04 13:07:06.1161 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-04 13:07:06.1631 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 13:07:08.1394 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 13:08:02.2917 Info Message Template Auto Format enabled
+2022-09-04 13:08:02.3179 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 13:08:02.5060 Info Adding target FileTarget(Name=AllFile)
+2022-09-04 13:08:02.5060 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-04 13:08:02.5060 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-04 13:08:02.5158 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-04 13:08:02.5158 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-04 13:08:02.5158 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-04 13:08:02.5681 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-04 13:08:02.6173 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 13:08:04.6410 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 13:20:07.0945 Info Message Template Auto Format enabled
+2022-09-04 13:20:07.1218 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 13:20:07.2751 Info Adding target FileTarget(Name=AllFile)
+2022-09-04 13:20:07.2751 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-04 13:20:07.2751 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-04 13:20:07.2815 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-04 13:20:07.2815 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-04 13:20:07.2815 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-04 13:20:07.3280 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-04 13:20:07.3642 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 13:20:09.3844 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 18:47:18.9688 Info Message Template Auto Format enabled
+2022-09-04 18:47:19.0242 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-04 18:47:19.2926 Info Adding target FileTarget(Name=AllFile)
+2022-09-04 18:47:19.2972 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-04 18:47:19.2972 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-04 18:47:19.2972 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-04 18:47:19.2972 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-04 18:47:19.2972 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-04 18:47:19.3800 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-04 18:47:19.4527 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-04 18:47:23.1012 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 20:41:40.8624 Info Message Template Auto Format enabled
+2022-09-06 20:41:40.9157 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-06 20:41:41.2400 Info Adding target FileTarget(Name=AllFile)
+2022-09-06 20:41:41.2489 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-06 20:41:41.2489 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-06 20:41:41.2489 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-06 20:41:41.2489 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-06 20:41:41.2701 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-06 20:41:41.3627 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-06 20:41:41.5258 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 20:41:49.9344 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 20:50:59.0836 Info Message Template Auto Format enabled
+2022-09-06 20:50:59.1307 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-06 20:50:59.3156 Info Adding target FileTarget(Name=AllFile)
+2022-09-06 20:50:59.3156 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-06 20:50:59.3156 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-06 20:50:59.3156 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-06 20:50:59.3156 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-06 20:50:59.3156 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-06 20:50:59.4710 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-06 20:51:03.9064 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 20:52:05.0145 Info Message Template Auto Format enabled
+2022-09-06 20:52:05.1224 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-06 20:52:05.8579 Info Adding target FileTarget(Name=AllFile)
+2022-09-06 20:52:05.9258 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-06 20:52:05.9258 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-06 20:52:05.9258 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-06 20:52:05.9258 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-06 20:52:05.9258 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-06 20:52:06.0651 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-06 20:52:07.8384 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 20:58:11.0707 Info Message Template Auto Format enabled
+2022-09-06 20:58:11.1090 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-06 20:58:11.4151 Info Adding target FileTarget(Name=AllFile)
+2022-09-06 20:58:11.4151 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-06 20:58:11.4151 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-06 20:58:11.4217 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-06 20:58:11.4217 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-06 20:58:11.4217 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-06 20:58:11.4633 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-06 20:58:11.5067 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 20:58:13.2960 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:04:55.6524 Info Message Template Auto Format enabled
+2022-09-06 21:04:55.7065 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-06 21:04:55.9002 Info Adding target FileTarget(Name=AllFile)
+2022-09-06 21:04:55.9049 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-06 21:04:55.9049 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-06 21:04:55.9049 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-06 21:04:55.9049 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-06 21:04:55.9049 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-06 21:04:56.1335 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-06 21:04:56.1831 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:04:58.0619 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:06:11.0267 Info Message Template Auto Format enabled
+2022-09-06 21:06:11.0957 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-06 21:06:11.5013 Info Adding target FileTarget(Name=AllFile)
+2022-09-06 21:06:11.5013 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-06 21:06:11.5013 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-06 21:06:11.5013 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-06 21:06:11.5013 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-06 21:06:11.5013 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-06 21:06:11.7566 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-06 21:06:11.8127 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:06:15.4819 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:10:55.9224 Info Message Template Auto Format enabled
+2022-09-06 21:10:55.9490 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-06 21:10:56.1065 Info Adding target FileTarget(Name=AllFile)
+2022-09-06 21:10:56.1103 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-06 21:10:56.1103 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-06 21:10:56.1103 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-06 21:10:56.1103 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-06 21:10:56.1103 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-06 21:10:56.1556 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-06 21:10:56.1902 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:10:58.1227 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:12:51.7304 Info Message Template Auto Format enabled
+2022-09-06 21:12:51.7732 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-06 21:12:52.0092 Info Adding target FileTarget(Name=AllFile)
+2022-09-06 21:12:52.0149 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-06 21:12:52.0149 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-06 21:12:52.0149 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-06 21:12:52.0149 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-06 21:12:52.0149 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-06 21:12:52.0875 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-06 21:12:52.1336 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:12:54.1778 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:15:15.5717 Info Message Template Auto Format enabled
+2022-09-06 21:15:15.6080 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-06 21:15:15.8148 Info Adding target FileTarget(Name=AllFile)
+2022-09-06 21:15:15.8148 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-06 21:15:15.8148 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-06 21:15:15.8266 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-06 21:15:15.8266 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-06 21:15:15.8266 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-06 21:15:15.8883 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-06 21:15:15.9317 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:15:18.7146 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:22:11.2951 Info Message Template Auto Format enabled
+2022-09-06 21:22:11.3211 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-06 21:22:11.5016 Info Adding target FileTarget(Name=AllFile)
+2022-09-06 21:22:11.5016 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-06 21:22:11.5016 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-06 21:22:11.5016 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-06 21:22:11.5016 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-06 21:22:11.5158 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-06 21:22:11.5596 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-06 21:22:11.6062 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:22:13.9608 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:29:32.0098 Info Message Template Auto Format enabled
+2022-09-06 21:29:32.0389 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-06 21:29:32.2076 Info Adding target FileTarget(Name=AllFile)
+2022-09-06 21:29:32.2076 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-06 21:29:32.2076 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-06 21:29:32.2076 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-06 21:29:32.2180 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-06 21:29:32.2180 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-06 21:29:32.2610 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-06 21:29:32.3053 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:29:34.5023 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:33:01.4853 Info Message Template Auto Format enabled
+2022-09-06 21:33:01.5248 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-06 21:33:01.6975 Info Adding target FileTarget(Name=AllFile)
+2022-09-06 21:33:01.7024 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-06 21:33:01.7024 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-06 21:33:01.7024 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-06 21:33:01.7024 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-06 21:33:01.7024 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-06 21:33:01.7564 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-06 21:33:01.8020 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:33:03.9809 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:36:15.2433 Info Message Template Auto Format enabled
+2022-09-06 21:36:15.2704 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-06 21:36:15.5002 Info Adding target FileTarget(Name=AllFile)
+2022-09-06 21:36:15.5167 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-06 21:36:15.5167 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-06 21:36:15.5319 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-06 21:36:15.5319 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-06 21:36:15.5454 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-06 21:36:15.6513 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-06 21:36:15.7834 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:36:18.6786 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:45:35.1787 Info Message Template Auto Format enabled
+2022-09-06 21:45:35.2237 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-06 21:45:35.5018 Info Adding target FileTarget(Name=AllFile)
+2022-09-06 21:45:35.5018 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-06 21:45:35.5018 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-06 21:45:35.5018 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-06 21:45:35.5018 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-06 21:45:35.5150 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-06 21:45:35.5624 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-06 21:45:35.6136 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:45:37.8778 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:49:02.7640 Info Message Template Auto Format enabled
+2022-09-06 21:49:02.7913 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-06 21:49:02.9395 Info Adding target FileTarget(Name=AllFile)
+2022-09-06 21:49:02.9395 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-06 21:49:02.9395 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-06 21:49:02.9395 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-06 21:49:02.9395 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-06 21:49:02.9518 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-06 21:49:02.9905 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-06 21:49:03.0287 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:49:05.1726 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:53:11.2789 Info Message Template Auto Format enabled
+2022-09-06 21:53:11.3148 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-06 21:53:11.5011 Info Adding target FileTarget(Name=AllFile)
+2022-09-06 21:53:11.5011 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-06 21:53:11.5011 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-06 21:53:11.5011 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-06 21:53:11.5011 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-06 21:53:11.5179 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-06 21:53:11.5697 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-06 21:53:11.6220 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:53:14.0958 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:56:55.8361 Info Message Template Auto Format enabled
+2022-09-06 21:56:55.9984 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-06 21:56:56.2067 Info Adding target FileTarget(Name=AllFile)
+2022-09-06 21:56:56.2067 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-06 21:56:56.2067 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-06 21:56:56.2067 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-06 21:56:56.2067 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-06 21:56:56.2186 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-06 21:56:56.2612 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-06 21:56:56.3036 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 21:56:58.6789 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 22:04:34.2652 Info Message Template Auto Format enabled
+2022-09-06 22:04:34.2944 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-06 22:04:34.6511 Info Adding target FileTarget(Name=AllFile)
+2022-09-06 22:04:34.6561 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-06 22:04:34.6561 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-06 22:04:34.6561 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-06 22:04:34.6561 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-06 22:04:34.7017 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-06 22:04:34.8353 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-06 22:04:34.9573 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 22:04:38.3798 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 22:07:23.4904 Info Message Template Auto Format enabled
+2022-09-06 22:07:23.5246 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-06 22:07:23.6937 Info Adding target FileTarget(Name=AllFile)
+2022-09-06 22:07:23.6937 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-06 22:07:23.7021 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-06 22:07:23.7021 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-06 22:07:23.7021 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-06 22:07:23.7021 Info Adding target ConsoleTarget(Name=lifetimeConsole)
+2022-09-06 22:07:23.7580 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-06 22:07:23.7969 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-06 22:07:26.4556 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-07 22:15:54.0408 Info Message Template Auto Format enabled
+2022-09-07 22:15:54.1609 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-07 22:15:55.0629 Info Adding target FileTarget(Name=AllFile)
+2022-09-07 22:15:55.0899 Info Adding target FileTarget(Name=AllErrorFile)
+2022-09-07 22:15:55.0899 Info Adding target FileTarget(Name=AllInfoFile)
+2022-09-07 22:15:55.1074 Info Adding target FileTarget(Name=LogRequestFile)
+2022-09-07 22:15:55.1074 Info Adding target FileTarget(Name=LogControllerFile)
+2022-09-07 22:15:56.4234 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ownFile-web' not found for logging rule: Microsoft.Hosting.Lifetime.
+2022-09-07 22:15:56.5064 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config
+2022-09-07 22:16:20.7955 Info Validating config: Targets=6, ConfigItems=98, FilePath=E:\Skillfactory\SFBlog\SFBlog\bin\Debug\net6.0\NLog.config

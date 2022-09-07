@@ -1,0 +1,21 @@
+﻿@model CommentEditViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" asp-controller="Comment" asp-action="AddComment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<input asp-for="Id" class="form-control" type="hidden"/>*@
+            <input asp-for="PostId" class="form-control" type="hidden"/>
+
+            <div class="form-group">
+                <label asp-for="Content" class="control-label"></label>
+                <textarea asp-for="Content" type="text" class="form-control" placeholder="Ваш комментарий"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Оставить комментарий" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

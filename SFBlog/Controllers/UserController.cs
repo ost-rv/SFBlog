@@ -16,34 +16,46 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SFBlog.Models;
 using SFBlog.BLL.Models;
+using SFBlog.Extensions;
 
 namespace SFBlog.Controllers
 {
-    //[Authorize]
     public class UserController : Controller
     {
+        private readonly ILogger<UserController> _logger;
         private IMapper _mapper;
         private IUnitOfWork _UoW;
         private UserRepository _userRepository;
         private IRepository<UserRole> _userRoleRepository;
         private IRepository<Role> _roleRepository;
 
-        public UserController(IMapper mapper, IUnitOfWork UoW)
+        public UserController(ILogger<UserController> logger,
+            IMapper mapper, 
+            IUnitOfWork UoW)
         {
+            _logger = logger;
             _mapper = mapper;
             _UoW = UoW;
             _userRepository = (UserRepository)_UoW.GetRepository<User>();
             _userRoleRepository = _UoW.GetRepository<UserRole>();
             _roleRepository = _UoW.GetRepository<Role>();
         }
-
+        /// <summary>
+        /// Запрос View для аунтификации
+        /// </summary>
+        /// <returns>View аунтификации</returns>
         [AllowAnonymous]
         [HttpGet]
         public IActionResult Authenticate()
         {
             return View();
         }
-
+        /// <summary>
+        /// Аунтификация пользователя
+        /// </summary>
+        /// <param name="model">ViewModel пользованеля</param>
+        /// <returns>В случае ошибок в заполнеии модел возращает обратно представление модели
+        /// иначе предсталение списка статей</returns>
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Authenticate(UserAuthenticateViewModel model)
@@ -57,9 +69,13 @@ namespace SFBlog.Controllers
                     UserDomain userDomain = UserDomain.CreateUserDomain(user);
                     await Authenticate(userDomain); // аутентификация
                     return RedirectToAction("PostList", "Post");
-                    
                 }
                 ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                _logger.LogInformation(ModelState.GetAllError());
+            }
+            else
+            {
+                _logger.LogInformation(ModelState.GetAllError());
             }
 
             return View(model);
@@ -71,11 +87,12 @@ namespace SFBlog.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, userDomain.Login),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, userDomain.Roles.FirstOrDefault()?.Name)
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, userDomain.Roles.FirstOrDefault()?.Name),
+                new Claim(ClaimTypes.NameIdentifier, userDomain.Id.ToString(), ClaimValueTypes.Integer),
             };
-
-            // создаем объект ClaimsIdentity
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims,
+            
+           // создаем объект ClaimsIdentity
+           ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims,
                 "AppCookie",
                 ClaimsIdentity.DefaultNameClaimType,
                 ClaimsIdentity.DefaultRoleClaimType);
@@ -83,21 +100,29 @@ namespace SFBlog.Controllers
             // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity));
+
+            _logger.LogInformation($"Успешная аутентификация пользователя: {User.Identity.Name}") ;
         }
 
+        /// <summary>
+        /// Запрос View для регистрации
+        /// </summary>
+        /// <returns>View аунтификации</returns>
         [AllowAnonymous]
-        [Route("Register")]
         [HttpGet]
         public IActionResult Register()
         {
-            return View("Register");
+            return View();
         }
 
-
+        /// <summary>
+        /// Регистрация пользователя в приложении
+        /// </summary>
+        /// <param name="newUser">ViewModel нового пользователя</param>
+        /// <returns>View список статей или при неудачной регистрации View регистрации</returns>
         [AllowAnonymous]
-        [Route("Register")]
         [HttpPost]
-        public async Task<string> Register(UserRegisterViewModel newUser)
+        public async Task<IActionResult> Register(UserRegisterViewModel newUser)
         {
             if (ModelState.IsValid)
             {
@@ -108,22 +133,38 @@ namespace SFBlog.Controllers
 
                 // добавляем пользователя в бд
                 await _userRepository.Create(user);
-                //await Authenticate(model.Login); // аутентификация
+                await Authenticate(_mapper.Map<UserDomain>(user)); // аутентификация
 
-                return "Успех!";
+                return View("/Post/PostList");
             }
-            return string.Join("\r\n", ModelState.Values.SelectMany(v => v.Errors));
+            else
+            {
+                _logger.LogInformation(ModelState.GetAllError());
+            }
+            
+            return View(newUser);
         }
 
+        /// <summary>
+        /// Выход из приложения
+        /// </summary>
+        /// <returns>View аунтификации</returns>
+        [Authorize]
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
+            _logger.LogInformation($"Пользователь {User.Identity.Name} вышел"); 
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Authenticate");
         }
 
-        
-        //[Route("EditUser/{id?}")]
+        /// <summary>
+        /// Запрос View для редактирования пользователя
+        /// </summary>
+        /// <returns>View редактирования пользователя</returns>
+        /// <param name="id">Идентификатор пользователя</param>
         [HttpGet]
+        [Authorize(Roles = "Aдминистратор")]
         public async Task<IActionResult> EditUser(int id)
         {
             User user = await _userRepository.Get(id);
@@ -140,60 +181,86 @@ namespace SFBlog.Controllers
 
         }
 
-        [Authorize]
-        [Route("EditUser")]
+        /// <summary>
+        /// Редактирования пользователя
+        /// </summary>
+        /// <param name="model">ViewModel для редактирования пользователя</param>
+        /// <returns>View редактирования пользователя</returns>
+        [Authorize(Roles = "Aдминистратор")]
         [HttpPut]
-        public async Task<string> Update(UserEditViewModel model)
+        public async Task<IActionResult> EditUser(UserEditViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var user = await _userRepository.Get(model.Id);
 
                 await _userRepository.Update(user);
+                _logger.LogInformation($"Редактирование пользователя {user.Login} пользователем {User.Identity.Name}");
 
-                return "Успех!";
+                return View(user.Id);
             }
             else
             {
-                return string.Join("\r\n", ModelState.Values.SelectMany(v => v.Errors));
+                _logger.LogInformation(ModelState.GetAllError());
             }
+            return View(model);
         }
 
-        [Authorize]
-        [Route("DeleteUser")]
+        /// <summary>
+        /// Удаление пользователя
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>View список пользователя</returns>
+        [Authorize(Roles = "Aдминистратор")]
         [HttpDelete]
-        public async Task<string> Delete(int userId)
+        public async Task<IActionResult> Delete(int userId)
         {
             User user = await _userRepository.Get(userId);
             if (user is null)
             {
-                return $"Пользователь с Id = {userId} не найден";
+                ViewBag.Message =  $"Пользователь с Id = {userId} не найден";
+                return View("UserList");
             }
-
             await _userRepository.Delete(user);
-            return "Пользователь удален.";
+            _logger.LogInformation("Пользователь удален.");
+            ViewBag.Message = $"Пользователь {user.Login} удален.";
+            
+            return View("UserList");
         }
 
-        //[Authorize(Roles = "Aдминистратор")]
+        /// <summary>
+        /// Запрос View список пользователей
+        /// </summary>
+        /// <returns>View список пользователей пользователя</returns>
         [HttpGet]
+        [Authorize(Roles = "Aдминистратор")]
         public async Task<IActionResult> UserList()
         {
             var userList = await Task.FromResult(_userRepository.GetAll());
             List<UserViewModel> resultUserList = _mapper.Map<List<UserViewModel>>(userList);
+            _logger.LogInformation($"Пользователь {User.Identity.Name} запросил список пользователей.");
 
             return View(resultUserList);
         }
 
-        [Authorize]
+        /// <summary>
+        /// Запрос View пользователя
+        /// </summary>
+        /// <param name="id">Идентификатор пользователя</param>
+        /// <returns>View пользователя</returns>
+        [Authorize(Roles = "Aдминистратор")]
         [HttpGet]
-        [Route("User")]
-        public async Task<UserViewModel> GetUser(int userId)
+        public async Task<IActionResult> UserView(int id)
         {
-            UserViewModel resultUser = new UserViewModel();
-
-            User user = await _userRepository.Get(userId);
-
-            return _mapper.Map<UserViewModel>(user);
+            var user = await _userRepository.Get(id);
+            if (user == null)
+            {
+                _logger.LogInformation($"Пользователь с Id = {id} не найден.");
+                ViewBag.Message = $"Пользователь с Id = {id} не найден.";
+                UserViewModel resultUser = new UserViewModel();
+                return View(resultUser);
+            }
+            return View(_mapper.Map<UserViewModel>(user));
         }
     }
 }

@@ -6,6 +6,11 @@
 
 <h4>Все пользователи</h4>
 
+@if (ViewBag.Message != null)
+{
+    <h2>ViewBag.Message</h2>
+}
+
 <p>
     <a asp-controller="User" asp-action="Register">Добавить пользователя</a>
 </p>

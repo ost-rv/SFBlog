@@ -15,48 +15,68 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SFBlog.Models;
+using SFBlog.Extensions;
 
 namespace SFBlog.Controllers
 {
-    //[Route("Tag")]
     public class TagController : Controller
     {
+        private readonly ILogger<UserController> _logger;
         private IMapper _mapper;
         private IUnitOfWork _UoW;
         private Repository<Tag> _tagRepository;
 
-        public TagController(IMapper mapper, IUnitOfWork UoW)
+        public TagController(IMapper mapper, IUnitOfWork UoW, ILogger<UserController> logger)
         {
+            _logger = logger;
             _mapper = mapper;
             _UoW = UoW;
             _tagRepository = (Repository<Tag>)_UoW.GetRepository<Tag>();
         }
 
-        [AllowAnonymous]
-        [Route("AddTag")]
+        /// <summary>
+        /// Запрос View добовления тэга
+        /// </summary>
+        /// <returns>View добовления тэга</returns>
+        [Authorize]
         [HttpGet]
         public IActionResult Add()
         {
             return View();
         }
 
-        [Route("AddTag")]
+        /// <summary>
+        /// Добовление тэга
+        /// </summary>
+        /// <param name="newTag"></param>
+        /// <returns>View список тэгов</returns>
+        [Authorize]
         [HttpPost]
-        public async Task<string> AddTag(TagEditViewModel newTag, int userId)
+        public async Task<IActionResult> AddTag(TagEditViewModel newTag)
         {
             if (ModelState.IsValid)
             {
                 var tag = _mapper.Map<Tag>(newTag);
 
-
                 await _tagRepository.Create(tag);
-                return "Успех!";
+                _logger.LogInformation($"Пользователь {User.Identity.Name} добавил тэг {tag.Designation}.");
+
+                return RedirectToAction("TagList");
             }
-            return string.Join("\r\n", ModelState.Values.SelectMany(v => v.Errors));
+            else
+            {
+                _logger.LogInformation(ModelState.GetAllError());
+            }
+
+            return View(newTag);
         }
 
-        
-        
+        /// <summary>
+        /// Запрос View для редактирования тэга
+        /// </summary>
+        /// <param name="id">Идентификатор тэга</param>
+        /// <returns>View для редактирования тэга</returns>
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> EditTag(int id)
         {
@@ -66,43 +86,58 @@ namespace SFBlog.Controllers
             return View(tagEdit);
         }
 
-
+        /// <summary>
+        /// Редактирование тэга
+        /// </summary>
+        /// <param name="model">ViewModel редактирования тэга</param>
+        /// <returns></returns>
         [Authorize]
-        [Route("EditTag")]
         [HttpPut]
-        public async Task<string> Update(TagEditViewModel model)
+        public async Task<IActionResult> EditTag(TagEditViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var tag = await _tagRepository.Get(model.Id);
 
                 await _tagRepository.Update(tag);
+                _logger.LogInformation($"Пользователь {User.Identity.Name} отредактировал тэг id = {tag.Id} {tag.Designation}");
 
-                return "Успех!";
+                return View("TagList");
             }
             else
             {
-                return string.Join("\r\n", ModelState.Values.SelectMany(v => v.Errors));
+                _logger.LogInformation(ModelState.GetAllError());
             }
+
+            return View(model);
+
         }
-
-
+        /// <summary>
+        /// Удалить тэг
+        /// </summary>
+        /// <param name="Id">Идентификатор тэга</param>
+        /// <returns>View списка тэгов</returns>
         [Authorize]
-        [Route("DeleteTag")]
         [HttpDelete]
-        public async Task<string> Delete(int tagId)
+        public async Task<IActionResult> Delete(int tagId)
         {
             Tag tag = await _tagRepository.Get(tagId);
             if (tag is null)
             {
-                return $"Тэг с Id = {tagId} не найден";
+                return View("NotFound");
             }
 
-            await _tagRepository.Delete(tag);
-            return "Тэг удален.";
+            await _tagRepository.Delete(tag); 
+            _logger.LogInformation($"Пользователь {User.Identity.Name} удалил тэг {tag.Designation}.");
+            return RedirectToAction("TagList");
+
         }
 
-        
+        /// <summary>
+        /// Получить View список тэгов
+        /// </summary>
+        /// <returns>View списка тэгов</returns>
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> TagList()
         {
@@ -112,16 +147,21 @@ namespace SFBlog.Controllers
             return View(resultTagList);
         }
 
+
         [Authorize]
         [HttpGet]
-        [Route("Tag")]
-        public async Task<TagViewModel> GetTag(int tagId)
+        public async Task<IActionResult> ViewTag(int id)
         {
-            TagViewModel resultTag = new TagViewModel();
 
-            Tag tag = await _tagRepository.Get(tagId);
+            Tag tag = await _tagRepository.Get(id);
+            if (tag == null)
+            {
+                _logger.LogInformation($"Пост с Id = {id} не найден.");
+                return View("NotFound");
+            }
 
-            return _mapper.Map<TagViewModel>(tag);
+
+            return View(_mapper.Map<TagViewModel>(tag));
         }
     }
 }

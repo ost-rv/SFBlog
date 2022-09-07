@@ -28,6 +28,7 @@ namespace SFBlog.DAL.Models
         public Post()
         { 
             PostTags = new ObservableCollection<PostTag>();
+            Comments = new ObservableCollection<Comment>();
         }
 
     }

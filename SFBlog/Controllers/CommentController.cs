@@ -15,44 +15,76 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SFBlog.Models;
+using SFBlog.Extensions;
 
 namespace SFBlog.Controllers
 {
     public class CommentController : Controller
     {
+        private readonly ILogger<UserController> _logger;
         private IMapper _mapper;
         private IUnitOfWork _UoW;
         private Repository<Comment> _commentRepository;
 
-        public CommentController(IMapper mapper, IUnitOfWork UoW)
+        public CommentController(IMapper mapper, IUnitOfWork UoW, ILogger<UserController> logger)
         {
+            _logger = logger;
             _mapper = mapper;
             _UoW = UoW;
             _commentRepository = (Repository<Comment>)_UoW.GetRepository<Comment>();
+            _logger = logger;
         }
 
-        [Route("AddComment")]
+        /// <summary>
+        /// Запрос представления для добавления комментария
+        /// </summary>
+        /// <param name="postId">Идентификатор поста к которому добавляется комментарий</param>
+        /// <returns>View добавления комментария</returns>
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> AddComment(int postId)
+        {
+            CommentEditViewModel newComment = new CommentEditViewModel();
+            newComment.PostId = postId;
+            return PartialView(newComment);
+        }
+
+        /// <summary>
+        /// Добавления комментария
+        /// </summary>
+        /// <param name="newComment">ViewModel комментария</param>
+        /// <returns></returns>
+        [Authorize]
         [HttpPost]
-        public async Task<string> Add(CommentEditViewModel newComment, int userId)
+        public async Task<IActionResult> AddComment(CommentEditViewModel newComment)
         {
             if (ModelState.IsValid)
             {
                 var comment = _mapper.Map<Comment>(newComment);
 
                 comment.DateAdd = DateTime.Now;
-                comment.UserId = userId;
-
+                comment.UserId = User.Identity.GeUsertId();
+               
                 await _commentRepository.Create(comment);
-                return "Успех!";
+                _logger.LogInformation($"Пользователь {User.Identity.Name} добавил комментарий.");
+                return View();
             }
-            return string.Join("\r\n", ModelState.Values.SelectMany(v => v.Errors));
+            else
+            {
+                _logger.LogInformation(ModelState.GetAllError());
+            }
+
+            return View(newComment);
         }
 
-
+        /// <summary>
+        /// Редактирования комментария
+        /// </summary>
+        /// <param name="model">ViewModel редактирования</param>
+        /// <returns>строка результа</returns>
         [Authorize]
-        [Route("EditComment")]
         [HttpPut]
-        public async Task<string> Update(CommentEditViewModel model)
+        public async Task<string> EditComment(CommentEditViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -68,9 +100,7 @@ namespace SFBlog.Controllers
             }
         }
 
-
         [Authorize]
-        [Route("DeleteComment")]
         [HttpDelete]
         public async Task<string> Delete(int commentId)
         {
@@ -81,10 +111,15 @@ namespace SFBlog.Controllers
             }
 
             await _commentRepository.Delete(comment);
+            _logger.LogInformation($"Пользователь {User.Identity.Name} удалил комментарий.");
             return "Пост удален.";
-        }
 
-        //[Authorize]
+
+        }
+        /// <summary>
+        /// Список всех комментариев
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> CommentList()
         {
@@ -94,9 +129,26 @@ namespace SFBlog.Controllers
             return View(resultCommetList);
         }
 
+        /// <summary>
+        /// Список комментариев к постсу
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> PostCommentList(int postId)
+        {
+            var commentList = await Task.FromResult(_commentRepository.Get(c => c.PostId == postId, c => c.OrderBy(c=>c.DateAdd)));
+            List<CommentViewModel> resultCommetList = _mapper.Map<List<CommentViewModel>>(commentList);
+
+            return View(resultCommetList);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="commentId"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
-        public async Task<CommentViewModel> GetComment(int commentId)
+        public async Task<CommentViewModel> ViewComment(int commentId)
         {
             CommentViewModel resultComment = new CommentViewModel();
 
