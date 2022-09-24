@@ -29,6 +29,16 @@
                     }
                 </div>
                 <p class="card-text">@user.Email</p>
+                <div>
+                    @if(User.IsInRole("Aдминистратор")) 
+                    {
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-outline-danger">
+                                <a asp-controller="User" asp-action="Delete" asp-route-id="@user.Id" >Удалить</a>
+                            </button>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>

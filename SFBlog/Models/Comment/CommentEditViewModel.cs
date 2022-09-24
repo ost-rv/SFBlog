@@ -8,7 +8,6 @@ namespace SFBlog.Models
         [HiddenInput]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Поле Комментарий обязательно для заполнения")]
         
         [Display(Name = "Id Статьи")]
         [HiddenInput]

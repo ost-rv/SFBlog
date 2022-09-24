@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using NLog;
 using NLog.Web;
 using SFBlog.Middlewares;
+using SFBlog.BLL.Services;
 
 namespace SFBlog
 {
@@ -42,6 +43,11 @@ namespace SFBlog
             services.AddDbContext<SFBlogDbContext>(options => options.UseSqlite(connection), ServiceLifetime.Singleton);
 
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
+            services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<IPostService, PostService>();
+            services.AddSingleton<ICommentService, CommentService>();
+            services.AddSingleton<ITagService, TagService>();
+            services.AddSingleton<IRoleService, RoleService>();
 
             MapperConfiguration mapperConfig = new MapperConfiguration( mc =>
             {
@@ -52,11 +58,6 @@ namespace SFBlog
             services.AddSingleton(mapper);
 
             
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "SFBlog", Version = "v1" });
-            //});
-
             services.AddAuthentication(options => options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme).
                 AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
                 {
@@ -70,11 +71,8 @@ namespace SFBlog
                     };
                 });
 
-            //services.AddControllers();
-            //services.AddEndpointsApiExplorer();
             // добавляем поддержку контроллеров с представлениями
             services.AddControllersWithViews();
-            //services.AddSwaggerGen();
             
 
         }
@@ -88,12 +86,6 @@ namespace SFBlog
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseSwagger();
-                //app.UseSwaggerUI(options =>
-                //{
-                //    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-                //    //options.RoutePrefix = string.Empty; //Предоставить пользовательский интерфейс Swagger в корневом каталоге приложения
-                //});
             }
             else
             {

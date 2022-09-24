@@ -39,10 +39,36 @@ namespace SFBlog.DAL.Repository
             return entity;
         }
 
+        public async Task<TEntity> LoadNavigateProperty(TEntity item, params Expression<Func<TEntity, object>>[] includes)
+        {
+            if (_db.Entry(item).State == EntityState.Detached)
+                return null;
+
+            if (includes.Length == 0)
+            {
+                foreach (var navProp in _db.Entry(item).Navigations)
+                {
+                    await navProp.LoadAsync();
+                }
+            }
+            else 
+            {
+                MemberExpression expressionBody = null;
+                string propName = String.Empty;
+                foreach (var expression in includes)
+                {
+                    expressionBody = (MemberExpression)expression.Body;
+                    propName = expressionBody.Member.Name;
+                    await _db.Entry(item).Navigation(propName).LoadAsync();
+                }
+            }
+            return item;
+        }
+
         public async virtual Task<IEnumerable<TEntity>> Get(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            params string[] includeProperties)
+            params Expression<Func<TEntity, object>>[] includes)
         {
             IQueryable<TEntity> query = Set;
 
@@ -51,23 +77,29 @@ namespace SFBlog.DAL.Repository
                 query = query.Where(filter);
             }
 
-            foreach (string includeProperty in includeProperties)
+            foreach (Expression<Func<TEntity, object>> expression in includes)
             {
-                query = query.Include(includeProperty);
+                query = query.Include(expression);
             }
 
             if (orderBy != null)
             {
-                return orderBy(query).ToList();
+                return  await orderBy(query).ToListAsync();
             }
             else
             {
-                return query.ToList();
+                return await query.ToListAsync();
             }
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includes)
         {
+            IQueryable<TEntity> query = Set;
+            foreach (Expression<Func<TEntity, object>> expression in includes)
+            {
+                query = query.Include(expression);
+            }
+            query.Load();
             return Set;
         }
 
@@ -76,5 +108,6 @@ namespace SFBlog.DAL.Repository
             Set.Update(item);
             return await _db.SaveChangesAsync();
         }
+
     }
 }

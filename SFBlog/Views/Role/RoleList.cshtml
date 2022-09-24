@@ -17,6 +17,16 @@
                     <a asp-controller="Role" asp-action="EditRole" asp-route-id="@role.Id">@role.Name</a>
                 </h5>
                 <p class="card-text">@role.Description</p>
+                <div>
+                    @if(User.IsInRole("Aдминистратор")) 
+                    {
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-outline-danger">
+                                <a asp-controller="Role" asp-action="Delete" asp-route-id="@role.Id">Удалить</a>
+                            </button>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>

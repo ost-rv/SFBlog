@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFBlog", "SFBlog\SFBlog.csproj", "{38033BD7-F6E1-45A8-8F70-81204C66380B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFBlog", "SFBlog\SFBlog.csproj", "{38033BD7-F6E1-45A8-8F70-81204C66380B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFBlog.DAL", "SFBlog.DAL\SFBlog.DAL.csproj", "{427678DF-7060-4A09-B28D-F6F31B11B1D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFBlog.DAL", "SFBlog.DAL\SFBlog.DAL.csproj", "{427678DF-7060-4A09-B28D-F6F31B11B1D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFBlog.BLL", "SFBlog.BLL\SFBlog.BLL.csproj", "{6E1A1A61-FFB9-42AE-940C-0EF9BB757581}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFBlog.BLL", "SFBlog.BLL\SFBlog.BLL.csproj", "{6E1A1A61-FFB9-42AE-940C-0EF9BB757581}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFBlog.API", "SFBlog.API\SFBlog.API.csproj", "{861FD84D-AC3A-421D-8DCC-B78CC4E2F0C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{6E1A1A61-FFB9-42AE-940C-0EF9BB757581}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E1A1A61-FFB9-42AE-940C-0EF9BB757581}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E1A1A61-FFB9-42AE-940C-0EF9BB757581}.Release|Any CPU.Build.0 = Release|Any CPU
+		{861FD84D-AC3A-421D-8DCC-B78CC4E2F0C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{861FD84D-AC3A-421D-8DCC-B78CC4E2F0C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{861FD84D-AC3A-421D-8DCC-B78CC4E2F0C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{861FD84D-AC3A-421D-8DCC-B78CC4E2F0C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

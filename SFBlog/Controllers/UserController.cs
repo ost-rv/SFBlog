@@ -15,8 +15,10 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SFBlog.Models;
-using SFBlog.BLL.Models;
 using SFBlog.Extensions;
+using SFBlog.BLL.Models;
+using SFBlog.BLL.Services;
+using SFBlog.BLL.Response;
 
 namespace SFBlog.Controllers
 {
@@ -25,20 +27,15 @@ namespace SFBlog.Controllers
         private readonly ILogger<UserController> _logger;
         private IMapper _mapper;
         private IUnitOfWork _UoW;
-        private UserRepository _userRepository;
-        private IRepository<UserRole> _userRoleRepository;
-        private IRepository<Role> _roleRepository;
+        private IUserService _userService;
 
         public UserController(ILogger<UserController> logger,
-            IMapper mapper, 
-            IUnitOfWork UoW)
+            IMapper mapper,
+            IUserService userService)
         {
             _logger = logger;
             _mapper = mapper;
-            _UoW = UoW;
-            _userRepository = (UserRepository)_UoW.GetRepository<User>();
-            _userRoleRepository = _UoW.GetRepository<UserRole>();
-            _roleRepository = _UoW.GetRepository<Role>();
+            _userService = userService;
         }
         /// <summary>
         /// Запрос View для аунтификации
@@ -60,13 +57,16 @@ namespace SFBlog.Controllers
         [HttpPost]
         public async Task<IActionResult> Authenticate(UserAuthenticateViewModel model)
         {
+
             if (ModelState.IsValid)
             {
-                User user = _userRepository.GetByLogin(model.Login);
 
-                if (user != null && user.Password == model.Password)
+                EntityBaseResponse<UserDomain> userResponse = _userService.GetByLogin(model.Login);
+
+                if (userResponse.Success)
                 {
-                    UserDomain userDomain = UserDomain.CreateUserDomain(user);
+
+                    UserDomain userDomain = userResponse.Entity;
                     await Authenticate(userDomain); // аутентификация
                     return RedirectToAction("PostList", "Post");
                 }
@@ -126,16 +126,14 @@ namespace SFBlog.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = _mapper.Map<User>(newUser);
-
-                UserRole userRole = new UserRole { User = user, RoleId = 3 /*Id роли пользованель*/ };
-                user.UserRoles.Add(userRole);
+                var user = _mapper.Map<UserDomain>(newUser);
 
                 // добавляем пользователя в бд
-                await _userRepository.Create(user);
-                await Authenticate(_mapper.Map<UserDomain>(user)); // аутентификация
+                var resultRegister = await _userService.Register(user);
+                // аутентификация
+                await Authenticate(resultRegister.Entity); 
 
-                return View("/Post/PostList");
+                return RedirectToAction("PostList", "Post");
             }
             else
             {
@@ -167,18 +165,27 @@ namespace SFBlog.Controllers
         [Authorize(Roles = "Aдминистратор")]
         public async Task<IActionResult> EditUser(int id)
         {
-            User user = await _userRepository.Get(id);
-            List<Role> allRoles = await Task.FromResult(_roleRepository.GetAll().ToList());
-            UserEditViewModel userEdit = _mapper.Map<UserEditViewModel>(user);
-            userEdit.CheckRoles = allRoles.Select(r => new CheckRoleViewModel
+            var responseService = await _userService.Get(id);
+            if (responseService.Success)
             {
-                Id = r.Id,
-                Name = r.Name,
-                Checked = user.UserRoles.Any(ur => ur.RoleId == r.Id)
-            }).ToList();
+                UserDomain user = responseService.Entity;
+                List<RoleDomain> allRoles = _userService.GetAllRoles().ToList();
 
-            return View(userEdit);
+                UserEditViewModel userEdit = _mapper.Map<UserEditViewModel>(user);
+                userEdit.CheckRoles = allRoles.Select(r => new CheckRoleViewModel
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    Checked = user.Roles.Any(ur => ur.Id == r.Id)
+                }).ToList();
 
+                return View(userEdit);
+
+            }
+            else 
+            {
+                return View("NotFound");
+            }
         }
 
         /// <summary>
@@ -186,18 +193,19 @@ namespace SFBlog.Controllers
         /// </summary>
         /// <param name="model">ViewModel для редактирования пользователя</param>
         /// <returns>View редактирования пользователя</returns>
+        //[Route("[controller]/[action]")]
+        
+        [HttpPost]
         [Authorize(Roles = "Aдминистратор")]
-        [HttpPut]
-        public async Task<IActionResult> EditUser(UserEditViewModel model)
+        public async Task<IActionResult> EditUser(int id, UserEditViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = await _userRepository.Get(model.Id);
-
-                await _userRepository.Update(user);
+                var user = _mapper.Map<UserDomain>(model);
+                await _userService.Update(user);
                 _logger.LogInformation($"Редактирование пользователя {user.Login} пользователем {User.Identity.Name}");
 
-                return View(user.Id);
+                return RedirectToAction("UserView", new { id });
             }
             else
             {
@@ -209,23 +217,29 @@ namespace SFBlog.Controllers
         /// <summary>
         /// Удаление пользователя
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="id"></param>
         /// <returns>View список пользователя</returns>
+        [HttpGet]
         [Authorize(Roles = "Aдминистратор")]
-        [HttpDelete]
-        public async Task<IActionResult> Delete(int userId)
+        public async Task<IActionResult> Delete(int id, List<SFBlog.Models.UserViewModel> model)
         {
-            User user = await _userRepository.Get(userId);
-            if (user is null)
+            EntityBaseResponse<UserDomain> userResponse = await _userService.Get(id);
+            if (!userResponse.Success)
             {
-                ViewBag.Message =  $"Пользователь с Id = {userId} не найден";
-                return View("UserList");
+                ViewBag.Message = userResponse.Message;
+                return View("UserList", model);
             }
-            await _userRepository.Delete(user);
+            userResponse = await _userService.Delete(userResponse.Entity);
+            if (!userResponse.Success)
+            {
+                ViewBag.Message = userResponse.Message;
+                return View("UserList", model);
+            }
+
             _logger.LogInformation("Пользователь удален.");
-            ViewBag.Message = $"Пользователь {user.Login} удален.";
+            //ViewBag.Message = $"Пользователь {userResponse.Entity.Login} удален.";
             
-            return View("UserList");
+            return RedirectToAction("UserList");
         }
 
         /// <summary>
@@ -236,8 +250,8 @@ namespace SFBlog.Controllers
         [Authorize(Roles = "Aдминистратор")]
         public async Task<IActionResult> UserList()
         {
-            var userList = await Task.FromResult(_userRepository.GetAll());
-            List<UserViewModel> resultUserList = _mapper.Map<List<UserViewModel>>(userList);
+            var userList = await Task.FromResult(_userService.GetAll());
+            List<UserViewModel> resultUserList = _mapper.Map<List<UserViewModel>>(userList.Entity);
             _logger.LogInformation($"Пользователь {User.Identity.Name} запросил список пользователей.");
 
             return View(resultUserList);
@@ -252,15 +266,14 @@ namespace SFBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> UserView(int id)
         {
-            var user = await _userRepository.Get(id);
-            if (user == null)
+            var userResponse = await _userService.Get(id);
+            if (!userResponse.Success )
             {
-                _logger.LogInformation($"Пользователь с Id = {id} не найден.");
-                ViewBag.Message = $"Пользователь с Id = {id} не найден.";
-                UserViewModel resultUser = new UserViewModel();
-                return View(resultUser);
+                _logger.LogInformation(userResponse.Message);
+                ViewBag.Message = userResponse.Message;
+                return View("NotFound");
             }
-            return View(_mapper.Map<UserViewModel>(user));
+            return View(_mapper.Map<UserViewModel>(userResponse.Entity));
         }
     }
 }

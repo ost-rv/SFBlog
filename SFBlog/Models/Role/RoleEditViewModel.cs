@@ -11,5 +11,9 @@ namespace SFBlog.Models
         [Display(Name = "Наименование", Prompt = "Введите наименование")]
         public string Name { get; set; }
 
+        [DataType(DataType.MultilineText)]
+        [Display(Name = "Описание", Prompt = "Введите описание")]
+        public string Description { get; set; }
+
     }
 }

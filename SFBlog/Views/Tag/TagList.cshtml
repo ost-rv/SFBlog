@@ -19,6 +19,16 @@
                     <a asp-controller="Tag" asp-action="EditTag" asp-route-id="@tag.Id">@tag.Designation</a>
                 </h5>
                 <p class="card-text text-right">Статей по тэгу: @tag.CountPost</p>
+                <div>
+                    @if(User.IsInRole("Aдминистратор")) 
+                    {
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-outline-danger">
+                                <a asp-controller="Tag" asp-action="Delete" asp-route-id="@tag.Id" >Удалить</a>
+                            </button>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>

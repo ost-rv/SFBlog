@@ -10,45 +10,51 @@ namespace SFBlog
     {
         public MappingProfile()
         {
-            CreateMap<User, UserEditViewModel>();
-            CreateMap<User, UserViewModel>()
-                .ForMember(dst => dst.Roles, src => src.MapFrom(c => c.UserRoles));
-            
-            CreateMap<Post, PostViewModel>()
-                .ForMember(dst => dst.Tags, src => src.MapFrom(c => c.PostTags))
+            //User
+            CreateMap<UserDomain, UserRegisterViewModel>();
+            CreateMap<UserRegisterViewModel, UserDomain>();
+
+            CreateMap<UserDomain, UserEditViewModel>();
+            CreateMap<UserEditViewModel, UserDomain>()
+                .ForMember(dst => dst.Roles,
+                           src => src.MapFrom(c => c.CheckRoles
+                                    .Where(r => r.Checked)
+                                    .Select(r => new RoleDomain { Id = r.Id, Name = r.Name})));
+
+            CreateMap<UserDomain, UserViewModel>()
+                .ForMember(dst => dst.Roles, src => src.MapFrom(c => c.Roles));
+
+
+            //Post
+            CreateMap<PostDomain, PostViewModel>()
+                .ForMember(dst => dst.Tags, src => src.MapFrom(c => c.Tags))
                 .ForMember(dst => dst.Author, src => src.MapFrom(c => c.User.Email));
-            CreateMap<Post, PostEditViewModel>();
-            CreateMap<Post, PostLightViewModel>();
-            CreateMap<PostEditViewModel, Post>()
-                .ForMember(dst => dst.PostTags, 
+            
+            CreateMap<PostDomain, PostEditViewModel>();
+            CreateMap<PostDomain, PostLightViewModel>();
+            CreateMap<PostEditViewModel, PostDomain>()
+                .ForMember(dst => dst.Tags, 
                            src => src.MapFrom(c => c.CheckTags
                                                 .Where(t => t.Checked)
-                                                .Select(t => new PostTag { TagId = t.Id})));
+                                                .Select(t => new TagDomain { Id = t.Id})));
 
-            CreateMap<PostTag, TagViewModel>()
-                .ForMember(dst => dst.Id, src => src.MapFrom(c => c.TagId))
-                .ForMember(dst => dst.Designation, src => src.MapFrom(c => c.Tag.Designation));
-            CreateMap<PostTag, TagLightViewModel>()
-                .ForMember(dst => dst.Id, src => src.MapFrom(c => c.TagId))
-                .ForMember(dst => dst.Designation, src => src.MapFrom(c => c.Tag.Designation));
-
-            CreateMap<Comment, CommentViewModel>()
-                .ForMember(dst => dst.Author, src => src.MapFrom(c => c.User.Email));
-            CreateMap<Comment, CommentEditViewModel>();
-
-            CreateMap<Tag, TagViewModel>()
-                .ForMember(dst => dst.Posts, srs => srs.MapFrom(c => c.PostTags));
-            CreateMap<Tag, TagEditViewModel>();
-
+            //Tag
             CreateMap<TagDomain, TagViewModel>();
+            CreateMap<TagDomain, TagLightViewModel>();
+            CreateMap<TagDomain, TagEditViewModel>();
+            CreateMap<TagEditViewModel, TagDomain>();
 
-            CreateMap<Role, RoleViewModel>();
-            CreateMap<Role, RoleEditViewModel>();
-            
-            CreateMap<UserRole, RoleViewModel>()
-                .ForMember(dst => dst.Id, src => src.MapFrom(c => c.RoleId))
-                .ForMember(dst => dst.Name, src => src.MapFrom(c => c.Role.Name));
+            //Comment
+            CreateMap<CommentDomain, CommentViewModel>()
+                .ForMember(dst => dst.Author, src => src.MapFrom(c => c.User.Email));
+            CreateMap<CommentDomain, CommentEditViewModel>();
+            CreateMap<CommentEditViewModel, CommentDomain> ();
 
+
+            //Role
+            CreateMap<RoleDomain, RoleViewModel>();
+            CreateMap<RoleDomain, RoleEditViewModel>();
+            CreateMap<RoleEditViewModel, RoleDomain>();
         }
     }
 }

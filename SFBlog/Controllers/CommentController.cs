@@ -16,6 +16,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SFBlog.Models;
 using SFBlog.Extensions;
+using SFBlog.BLL.Services;
+using SFBlog.BLL.Models;
+using SFBlog.BLL.Response;
 
 namespace SFBlog.Controllers
 {
@@ -23,15 +26,13 @@ namespace SFBlog.Controllers
     {
         private readonly ILogger<UserController> _logger;
         private IMapper _mapper;
-        private IUnitOfWork _UoW;
-        private Repository<Comment> _commentRepository;
+        private ICommentService _commentService;
 
-        public CommentController(IMapper mapper, IUnitOfWork UoW, ILogger<UserController> logger)
+        public CommentController(IMapper mapper, ICommentService commentService, ILogger<UserController> logger)
         {
             _logger = logger;
             _mapper = mapper;
-            _UoW = UoW;
-            _commentRepository = (Repository<Comment>)_UoW.GetRepository<Comment>();
+            _commentService = commentService;
             _logger = logger;
         }
 
@@ -60,20 +61,19 @@ namespace SFBlog.Controllers
         {
             if (ModelState.IsValid)
             {
-                var comment = _mapper.Map<Comment>(newComment);
-
-                comment.DateAdd = DateTime.Now;
+                var comment = _mapper.Map<CommentDomain>(newComment);
                 comment.UserId = User.Identity.GeUsertId();
-               
-                await _commentRepository.Create(comment);
-                _logger.LogInformation($"Пользователь {User.Identity.Name} добавил комментарий.");
-                return View();
+                EntityBaseResponse<CommentDomain> result = await _commentService.Add(comment);
+                if (result.Success)
+                {
+                    _logger.LogInformation($"Пользователь {User.Identity.Name} добавил комментарий.");
+                    return RedirectToAction("ViewPost", "Post", new { id = comment.PostId } );
+                }
             }
             else
             {
                 _logger.LogInformation(ModelState.GetAllError());
             }
-
             return View(newComment);
         }
 
@@ -83,37 +83,43 @@ namespace SFBlog.Controllers
         /// <param name="model">ViewModel редактирования</param>
         /// <returns>строка результа</returns>
         [Authorize]
-        [HttpPut]
-        public async Task<string> EditComment(CommentEditViewModel model)
+        [HttpPost]
+        public async Task<IActionResult> EditComment(CommentEditViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var comment = await _commentRepository.Get(model.Id);
+                var comment = _mapper.Map<CommentDomain>(model);
 
-                await _commentRepository.Update(comment);
+                await _commentService.Update(comment);
 
-                return "Успех!";
+                return RedirectToAction("PostView", "Post", new { id = model.PostId } );
             }
             else
             {
-                return string.Join("\r\n", ModelState.Values.SelectMany(v => v.Errors));
+                _logger.LogInformation(ModelState.GetAllError());
             }
+
+            return View(model);
         }
 
         [Authorize]
-        [HttpDelete]
-        public async Task<string> Delete(int commentId)
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
         {
-            Comment comment = await _commentRepository.Get(commentId);
-            if (comment is null)
+            EntityBaseResponse<CommentDomain> comment = await _commentService.Get(id);
+
+            if (!comment.Success)
             {
-                return $"Пост с Id = {commentId} не найден";
+                return View("NotFound");
             }
 
-            await _commentRepository.Delete(comment);
-            _logger.LogInformation($"Пользователь {User.Identity.Name} удалил комментарий.");
-            return "Пост удален.";
+            comment = await _commentService.Delete(comment.Entity);
+            if (comment.Success)
+            {
+                _logger.LogInformation($"Пользователь {User.Identity.Name} удалил комментарий.");
 
+            }
+            return RedirectToAction("CommentList");
 
         }
         /// <summary>
@@ -123,8 +129,8 @@ namespace SFBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> CommentList()
         {
-            var commentList = await Task.FromResult(_commentRepository.GetAll());
-            List<CommentViewModel> resultCommetList = _mapper.Map<List<CommentViewModel>>(commentList);
+            var commentList = await Task.FromResult(_commentService.GetAll());
+            List<CommentViewModel> resultCommetList = _mapper.Map<List<CommentViewModel>>(commentList.Entity);
 
             return View(resultCommetList);
         }
@@ -136,7 +142,7 @@ namespace SFBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> PostCommentList(int postId)
         {
-            var commentList = await Task.FromResult(_commentRepository.Get(c => c.PostId == postId, c => c.OrderBy(c=>c.DateAdd)));
+            var commentList = await Task.FromResult(_commentService.GetByPost(postId));
             List<CommentViewModel> resultCommetList = _mapper.Map<List<CommentViewModel>>(commentList);
 
             return View(resultCommetList);
@@ -148,13 +154,17 @@ namespace SFBlog.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpGet]
-        public async Task<CommentViewModel> ViewComment(int commentId)
+        public async Task<IActionResult> ViewComment(int id)
         {
-            CommentViewModel resultComment = new CommentViewModel();
+            var commentResponse = await _commentService.Get(id);
 
-            Comment comment = await _commentRepository.Get(commentId);
+            if (!commentResponse.Success)
+            {
+                _logger.LogInformation(commentResponse.Message);
+                return View("NotFound");
+            }
 
-            return _mapper.Map<CommentViewModel>(comment);
+            return View(_mapper.Map<TagViewModel>(commentResponse.Entity));
         }
     }
 }

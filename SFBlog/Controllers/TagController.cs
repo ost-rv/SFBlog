@@ -16,22 +16,23 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SFBlog.Models;
 using SFBlog.Extensions;
+using SFBlog.BLL.Services;
+using SFBlog.BLL.Models;
+using SFBlog.BLL.Response;
 
 namespace SFBlog.Controllers
 {
     public class TagController : Controller
     {
-        private readonly ILogger<UserController> _logger;
+        private readonly ILogger<TagController> _logger;
         private IMapper _mapper;
-        private IUnitOfWork _UoW;
-        private Repository<Tag> _tagRepository;
+        private ITagService _tagService;
 
-        public TagController(IMapper mapper, IUnitOfWork UoW, ILogger<UserController> logger)
+        public TagController(IMapper mapper, ITagService tagService, ILogger<TagController> logger)
         {
             _logger = logger;
             _mapper = mapper;
-            _UoW = UoW;
-            _tagRepository = (Repository<Tag>)_UoW.GetRepository<Tag>();
+            _tagService = tagService;
         }
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace SFBlog.Controllers
         /// <returns>View добовления тэга</returns>
         [Authorize]
         [HttpGet]
-        public IActionResult Add()
+        public IActionResult AddTag()
         {
             return View();
         }
@@ -49,19 +50,21 @@ namespace SFBlog.Controllers
         /// Добовление тэга
         /// </summary>
         /// <param name="newTag"></param>
-        /// <returns>View список тэгов</returns>
+        /// <returns>View список тэгов</\eturns>
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddTag(TagEditViewModel newTag)
         {
             if (ModelState.IsValid)
             {
-                var tag = _mapper.Map<Tag>(newTag);
+                var tag = _mapper.Map<TagDomain>(newTag);
 
-                await _tagRepository.Create(tag);
-                _logger.LogInformation($"Пользователь {User.Identity.Name} добавил тэг {tag.Designation}.");
-
-                return RedirectToAction("TagList");
+                EntityBaseResponse<TagDomain> result  = await _tagService.Add(tag);
+                if (result.Success)
+                {
+                    _logger.LogInformation($"Пользователь {User.Identity.Name} добавил тэг {tag.Designation}.");
+                    return RedirectToAction("TagList");
+                }
             }
             else
             {
@@ -80,10 +83,16 @@ namespace SFBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> EditTag(int id)
         {
-            Tag tag = await _tagRepository.Get(id);
-            TagEditViewModel tagEdit = _mapper.Map<TagEditViewModel>(tag);
-
-            return View(tagEdit);
+            EntityBaseResponse<TagDomain> tag = await _tagService.Get(id);
+            if (tag.Success)
+            {
+                TagEditViewModel tagEdit = _mapper.Map<TagEditViewModel>(tag.Entity);
+                return View(tagEdit);
+            }
+            else
+            {
+                return View("NotFound");
+            }
         }
 
         /// <summary>
@@ -92,17 +101,16 @@ namespace SFBlog.Controllers
         /// <param name="model">ViewModel редактирования тэга</param>
         /// <returns></returns>
         [Authorize]
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> EditTag(TagEditViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var tag = await _tagRepository.Get(model.Id);
-
-                await _tagRepository.Update(tag);
+                var tag = _mapper.Map<TagDomain>(model);
+                await _tagService.Update(tag);
                 _logger.LogInformation($"Пользователь {User.Identity.Name} отредактировал тэг id = {tag.Id} {tag.Designation}");
 
-                return View("TagList");
+                return RedirectToAction("TagList");
             }
             else
             {
@@ -110,7 +118,6 @@ namespace SFBlog.Controllers
             }
 
             return View(model);
-
         }
         /// <summary>
         /// Удалить тэг
@@ -118,17 +125,21 @@ namespace SFBlog.Controllers
         /// <param name="Id">Идентификатор тэга</param>
         /// <returns>View списка тэгов</returns>
         [Authorize]
-        [HttpDelete]
-        public async Task<IActionResult> Delete(int tagId)
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
         {
-            Tag tag = await _tagRepository.Get(tagId);
-            if (tag is null)
+            EntityBaseResponse<TagDomain> tag = await _tagService.Get(id);
+            if (!tag.Success)
             {
                 return View("NotFound");
             }
 
-            await _tagRepository.Delete(tag); 
-            _logger.LogInformation($"Пользователь {User.Identity.Name} удалил тэг {tag.Designation}.");
+            tag = await _tagService.Delete(tag.Entity);
+            if (tag.Success)
+            {
+                _logger.LogInformation($"Пользователь {User.Identity.Name} удалил тэг {tag.Entity.Designation}.");
+                
+            }
             return RedirectToAction("TagList");
 
         }
@@ -141,27 +152,27 @@ namespace SFBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> TagList()
         {
-            var tagList = await Task.FromResult(_tagRepository.GetAll());
-            List<TagViewModel> resultTagList = _mapper.Map<List<TagViewModel>>(tagList);
+            var tagList = await Task.FromResult(_tagService.GetAll());
+            List<TagViewModel> resultTagList = _mapper.Map<List<TagViewModel>>(tagList.Entity);
 
             return View(resultTagList);
-        }
 
+        }
 
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> ViewTag(int id)
         {
-
-            Tag tag = await _tagRepository.Get(id);
-            if (tag == null)
+            var tagResponse = await _tagService.Get(id);
+           
+            if (!tagResponse.Success)
             {
-                _logger.LogInformation($"Пост с Id = {id} не найден.");
+                _logger.LogInformation(tagResponse.Message);
                 return View("NotFound");
             }
 
+            return View(_mapper.Map<TagViewModel>(tagResponse.Entity));
 
-            return View(_mapper.Map<TagViewModel>(tag));
         }
     }
 }

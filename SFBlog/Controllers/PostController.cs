@@ -16,25 +16,25 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SFBlog.Models;
 using SFBlog.Extensions;
+using SFBlog.BLL.Services;
+using SFBlog.BLL.Models;
+using SFBlog.BLL.Response;
 
 namespace SFBlog.Controllers
 {
     public class PostController : Controller
     {
-        private readonly ILogger<UserController> _logger;
+        private readonly ILogger<PostController> _logger;
         private IMapper _mapper;
-        private IUnitOfWork _UoW;
-        private Repository<Post> _postRepository;
-        private Repository<Tag> _tagRepository;
+        private IPostService _postService;
 
-        public PostController(IMapper mapper, IUnitOfWork UoW, ILogger<UserController> logger)
+        public PostController(IMapper mapper, IPostService postService, ILogger<PostController> logger)
         {
-            _logger = logger; ;
+            _logger = logger; 
             _mapper = mapper;
-            _UoW = UoW;
-            _postRepository = (Repository<Post>)_UoW.GetRepository<Post>();
-            _tagRepository = (Repository<Tag>)_UoW.GetRepository<Tag>();
+            _postService = postService;
         }
+
         /// <summary>
         /// Запрос предсталвения добавления поста
         /// </summary>
@@ -44,7 +44,7 @@ namespace SFBlog.Controllers
         public async Task<IActionResult> AddPost()
         {
             PostEditViewModel post = new PostEditViewModel();
-            var tags = await Task.FromResult(_tagRepository.GetAll());
+            var tags = await Task.FromResult(_postService.GetAllTags());
             post.CheckTags = tags.Select(t => new CheckTagViewModel { Id = t.Id, Designation = t.Designation, Checked = false }).ToList();
 
             return View(post);
@@ -61,14 +61,22 @@ namespace SFBlog.Controllers
         {
             if (ModelState.IsValid)
             {
-                var post = _mapper.Map<Post>(newPost);
+                var post = _mapper.Map<PostDomain>(newPost);
 
-                post.DateAdd = DateTime.Now;
                 post.UserId = User.Identity.GeUsertId();
 
-                await _postRepository.Create(post);
-                _logger.LogInformation($"Пользователь {User.Identity.Name} добавил пост {post.Title}.");
-                return RedirectToAction("ViewPost", new { id = post.Id } );
+                EntityBaseResponse<PostDomain> result = await _postService.Add(post);
+
+                if (result.Success)
+                {
+                    _logger.LogInformation($"Пользователь {User.Identity.Name} добавил пост {post.Title}.");
+                    return RedirectToAction("ViewPost", new { result.Entity.Id });
+                }
+                else 
+                {
+                    View(newPost);
+                }
+                
             }
             else
             {
@@ -87,17 +95,25 @@ namespace SFBlog.Controllers
         [Authorize]
         public async Task<IActionResult> EditPost(int id)
         {
-            Post post = (await Task.FromResult(_postRepository.Get(p => p.Id == id, null, "PostTags"))).Result.FirstOrDefault();
-            List<Tag> allTags = await Task.FromResult(_tagRepository.GetAll().ToList());
-            PostEditViewModel postEdit = _mapper.Map<PostEditViewModel>(post);
-            postEdit.CheckTags = allTags.Select(t => new CheckTagViewModel
+            EntityBaseResponse<PostDomain> post = await _postService.Get(id);
+            if (post.Success)
             {
-                Id = t.Id,
-                Designation = t.Designation,
-                Checked = post.PostTags.Any(pt => pt.TagId == t.Id)
-            }).ToList();
+                List<TagDomain> allTags = _postService.GetAllTags().ToList();
+                PostEditViewModel postEdit = _mapper.Map<PostEditViewModel>(post.Entity);
 
-            return View(postEdit);
+                postEdit.CheckTags = allTags.Select(t => new CheckTagViewModel
+                {
+                    Id = t.Id,
+                    Designation = t.Designation,
+                    Checked = post.Entity.Tags.Any(pt => pt.Id == t.Id)
+                }).ToList();
+
+                return View(postEdit);
+            }
+            else
+            {
+                return View("NotFound");
+            }
         }
 
 
@@ -107,17 +123,16 @@ namespace SFBlog.Controllers
         /// <param name="model">ViewModel редактирования поста</param>
         /// <returns>View поста или View редактирования поста</returns>
         [Authorize]
-        [HttpPut]
-        public async Task<IActionResult> EditPost(PostEditViewModel model)
+        [HttpPost]
+        public async Task<IActionResult> EditPost(int id, PostEditViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var post = await _postRepository.Get(model.Id);
+                var post = _mapper.Map<PostDomain>(model);
+                await _postService.Update(post);
+                _logger.LogInformation($"Пользователь {User.Identity.Name} отредактировал статью {post.Title}");
 
-                await _postRepository.Update(post);
-                _logger.LogInformation($"Пользователь {User.Identity.Name} отредактировал пост {post.Title}");
-
-                return RedirectToAction("ViewPost", post.Id);
+                return RedirectToAction("ViewPost", new { id });
             }
             else
             {
@@ -125,6 +140,7 @@ namespace SFBlog.Controllers
             }
 
             return View(model);
+
         }
 
         /// <summary>
@@ -133,20 +149,22 @@ namespace SFBlog.Controllers
         /// <param name="id">Идентификатор поста</param>
         /// <returns>View списка статей</returns>
         [Authorize]
-        [HttpDelete]
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            Post post = await _postRepository.Get(id);
-            if (post is null)
+            EntityBaseResponse<PostDomain> post = await _postService.Get(id);
+            if (!post.Success)
             {
-                ViewBag.Message = $"Пост с Id = {id} не найден";
-                return View("PostList");
+                return View("NotFound");
             }
 
-            await _postRepository.Delete(post);
-            _logger.LogInformation($"Пользователь {User.Identity.Name} удалил пост {post.Title}.");
-
-            return View("PostList");
+            post = await _postService.Delete(post.Entity);
+            if (!post.Success)
+            {
+                _logger.LogInformation($"Пользователь {User.Identity.Name} удалил статью {post.Entity.Title}.");
+            }
+            
+            return RedirectToAction("PostList");
         }
 
         /// <summary>
@@ -156,8 +174,8 @@ namespace SFBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> PostList()
         {
-            var postList = await Task.FromResult(_postRepository.GetAll());
-            List<PostViewModel> resultPostList = _mapper.Map<List<PostViewModel>>(postList);
+            var postList = await Task.FromResult(_postService.GetAll());
+            List<PostViewModel> resultPostList = _mapper.Map<List<PostViewModel>>(postList.Entity);
 
             return View(resultPostList);
         }
@@ -171,20 +189,17 @@ namespace SFBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> ViewPost(int id)
         {
-            Post post = (await Task.FromResult(_postRepository.Get(p => p.Id == id, 
-                null, 
-                "PostTags", 
-                "User", 
-                "Comments"))).Result.FirstOrDefault();
+            var postResponse = await _postService.Get(id);
 
-            if (post == null)
+            if (!postResponse.Success)
             {
-                _logger.LogInformation($"Пост с Id = {id} не найден.");
+                _logger.LogInformation(postResponse.Message);
+                
                 return View("NotFound");
             }
 
-            PostViewModel postView = _mapper.Map<PostViewModel>(post);
-            return View(postView);
+            return View(_mapper.Map<PostViewModel>(postResponse.Entity));
+
         }
     }
 }
